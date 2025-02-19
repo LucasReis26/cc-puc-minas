@@ -44,7 +44,7 @@ void removeE(wchar_t *word) {
 
 // Função para ler uma string wide da entrada
 bool readS(wchar_t *word) {
-    if (fgetws(word, 255, stdin) == NULL) {
+    if (fgetws(word, 100, stdin) == NULL) {
         return false; // Indica que o fim do arquivo foi atingido
     }
     removeE(word);
@@ -64,14 +64,14 @@ void inverseString(wchar_t *word, wchar_t *iString) {
 
 // Função para verificar se uma string wide é um palíndromo
 bool ehPalindromo(wchar_t *word) {
-    wchar_t iString[255];
+    wchar_t iString[100];
     inverseString(word, iString);
     return compareS(word, iString) == 0; // Retorna true se for um palíndromo
 }
 
 int main() {
     setlocale(LC_ALL, "en_US.UTF-8"); // Configura a localização para suportar caracteres wide
-    wchar_t word[255];
+    wchar_t word[100];
 
     while (readS(word)) { // Lê a próxima palavra
         if (compareS(word, L"FIM") == 0) {
@@ -79,9 +79,9 @@ int main() {
         }
 
         if (ehPalindromo(word)) { // Verifica se é um palíndromo
-            wprintf(L"SIM\n");
+            printf("SIM\n");
         } else {
-            wprintf(L"NAO\n");
+           	printf("NAO\n");
         }
     }
 

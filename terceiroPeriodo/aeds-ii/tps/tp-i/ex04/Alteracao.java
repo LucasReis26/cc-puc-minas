@@ -1,10 +1,37 @@
-package ex04;
+// package ex04;
 
 import java.util.Scanner;
 import java.util.Random;
 
 public class Alteracao{
-    static String alteraLetra(String word, char first, char second){
+	public static Integer strcmp (String word1, String word2){
+		Integer resp = 0;
+
+		int wlength1 = word1.length(),
+			wlength2 = word2.length(),
+			minorLength = (wlength1 < wlength2) ? wlength1 : wlength2;
+
+		for(int i = 0; i < minorLength; i++){
+			if(word1.charAt(i) > word2.charAt(i)){
+				resp++;
+				i = minorLength;
+			}
+			else if(word1.charAt(i) < word2.charAt(i)){
+				resp--;
+				i = minorLength;
+			}
+		}
+
+		if(resp == 0 && wlength1 != wlength2){
+			if(wlength1 > wlength2)
+				resp++;
+			else
+				resp--;
+		}
+
+		return resp;
+	}
+    public static String alteraLetra(String word, char first, char second){
 
         char[] wordChar = new char[word.length()];
 
@@ -29,11 +56,19 @@ public class Alteracao{
 
         gerador.setSeed(4);
 
-        char first = ((char) ('a' + (Math.abs(gerador.nextInt()) % 26)));
-        
-        char second = ((char) ('a' + (Math.abs(gerador.nextInt()) % 26)));
+		while(strcmp(word,"FIM") != 0){
 
-        System.out.println(alteraLetra(word, first, second));
+			char first = ((char) ('a' + (Math.abs(gerador.nextInt()) % 26)));
+			// System.out.println("Caractere sorteado: " + first);
+
+			char second = ((char) ('a' + (Math.abs(gerador.nextInt()) % 26)));
+			// System.out.println("Caractere sorteado: " + second);
+
+			System.out.println(alteraLetra(word, first, second));
+
+			word = sc.nextLine();
+
+		}
 
         sc.close();
     }

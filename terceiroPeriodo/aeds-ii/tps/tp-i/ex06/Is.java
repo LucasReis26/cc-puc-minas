@@ -44,7 +44,7 @@ public class Is{
 				resp = false;
 			}
 		}
-		if(resp && decimalPoint == 1)
+		if(resp && (decimalPoint == 1 || decimalPoint == 0))
 			resp = true;
 		else
 			resp = false;

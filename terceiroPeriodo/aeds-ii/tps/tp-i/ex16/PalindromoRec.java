@@ -1,4 +1,4 @@
-package ex16;
+// package ex16;
 
 import java.util.Scanner;
 

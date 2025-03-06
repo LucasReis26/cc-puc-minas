@@ -1,4 +1,4 @@
-package ex18;
+// package ex18;
 
 import java.util.Scanner;
 
@@ -33,7 +33,7 @@ public class CiframentoRec{
 
 		return wchar;
 	}
-	public static String cifra(char[] wchar, Integer i, Integer e){
+	public static String cifra(char[] wchar, Integer i){
 		String resp = "";
 		if(i == wchar.length)
 			resp = new String(wchar);
@@ -55,8 +55,7 @@ public class CiframentoRec{
 		while(strcmp(w,"FIM") != 0){
 
 			char[] wchar = toCharArray(w);
-			Integer wlen = wchar.length;
-			System.out.println(cifra(wchar,0,wlen));
+			System.out.println(cifra(wchar,0));
 
 			w = sc.nextLine();
 		}

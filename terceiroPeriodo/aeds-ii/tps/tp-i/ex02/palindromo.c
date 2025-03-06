@@ -1,89 +1,84 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <stdio.h>
 #include <wchar.h>
-#include <locale.h> // Para configurar a localização e suporte a caracteres wide
+#include <locale.h>
 
-// Função para calcular o comprimento de uma string wide
-int sLength(wchar_t *word) {
-    int count = 0;
-    while (word[count] != L'\0')
-        count++;
-    return count;
+int wslen(wchar_t *w){
+	int count = 0;
+	while(w[count] != L'\0')
+		count++;
+	return count;
 }
 
-// Função para comparar duas strings wide
-int compareS(wchar_t *word1, wchar_t *word2) {
-    int len1 = sLength(word1);
-    int len2 = sLength(word2);
-    int minorS = (len1 < len2) ? len1 : len2;
-
-    for (int i = 0; i < minorS; i++) {
-		if (word1[i] != word2[i]) {
-            return (word1[i] > word2[i]) ? 1 : -1;
-        }
-    }
-
-    if (len1 != len2) {
-        return (len1 > len2) ? 1 : -1;
-    }
-
-    return 0; // As strings são iguais
+int slen(char *w){
+	int count = 0;
+	while(w[count] != '\0')
+		count++;
+	return count;
 }
 
-// Função para remover o caractere de nova linha (\n) de uma string wide
-void removeE(wchar_t *word) {
-    int wlength = sLength(word);
-    for (int i = 0; i < wlength; i++) {
-        if (word[i] == L'\n') {
-            word[i] = L'\0';
-            break; // Sai do loop após remover o \n
-        }
-    }
+int scmp(char *w1, char *w2){
+	int wlen1 = slen(w1),
+		wlen2 = slen(w2),
+		min = (wlen1 < wlen2) ? wlen1 : wlen2,
+		resp = 0;
+
+	for(int i = 0; i < min; i++){
+		if(w1[i] < w2[i]){
+			resp = -1;
+			i = min;
+		}else if(w1[i] > w2[i]){
+			resp = 1;
+			i = min;
+		}
+	}
+	if(resp == min && wlen1 != wlen2){
+		resp = (wlen1 < wlen2) ? -1 : 1;
+	}
+
+	return resp;
 }
 
-// Função para ler uma string wide da entrada
-bool readS(wchar_t *word) {
-    if (fgetws(word, 100, stdin) == NULL) {
-        return false; // Indica que o fim do arquivo foi atingido
-    }
-    removeE(word);
-    return true; // Indica que a leitura foi bem-sucedida
+void removeE(char *w){
+	int wlen = slen(w);
+	for(int i = 0; i < wlen; i++){
+		if(w[i] == '\n'){
+			w[i] = '\0';
+		}
+	}
 }
 
-// Função para inverter uma string wide
-void inverseString(wchar_t *word, wchar_t *iString) {
-    int wlength = sLength(word);
-
-    for (int i = 0; i < wlength; i++) {
-        iString[i] = word[wlength - 1 - i];
-    }
-
-    iString[wlength] = L'\0';
+void readLine(char *w){
+	fgets(w,256,stdin);
+	removeE(w);
 }
 
-// Função para verificar se uma string wide é um palíndromo
-bool ehPalindromo(wchar_t *word) {
-    wchar_t iString[100];
-    inverseString(word, iString);
-    return compareS(word, iString) == 0; // Retorna true se for um palíndromo
+int ehPalindromo(wchar_t *w){
+	int wlen = wslen(w),
+		resp = 1;
+	for(int i = 0; i < wlen/2; i++){
+		if(w[i] != w[wlen - i - 1]){
+			resp = 0;
+			i = wlen;
+		}
+	}
+	return resp;
 }
 
-int main() {
-    setlocale(LC_ALL, "en_US.UTF-8"); // Configura a localização para suportar caracteres wide
-    wchar_t word[100];
-
-    while (readS(word)) { // Lê a próxima palavra
-        if (compareS(word, L"FIM") == 0) {
-            break; // Sai do loop se a palavra for "FIM"
-        }
-
-        if (ehPalindromo(word)) { // Verifica se é um palíndromo
-            printf("SIM\n");
-        } else {
-           	printf("NAO\n");
-        }
-    }
-
-    return 0;
+int main(){
+	setlocale(LC_ALL,"pt_BR.UTF-8");
+	char *w = (char *)malloc(256*sizeof(char));
+	wchar_t *nw = (wchar_t *)malloc(256*sizeof(char));
+	readLine(w);
+	while(scmp(w,"FIM") != 0){
+		mbstowcs(nw,w,256);
+		if(ehPalindromo(nw))
+			printf("SIM\n");
+		else
+			printf("NAO\n");
+		readLine(w);
+	}
+	free(w);
+	free(nw);
+	return 0;
 }

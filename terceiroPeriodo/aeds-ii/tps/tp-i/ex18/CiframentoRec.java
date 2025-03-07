@@ -39,10 +39,10 @@ public class CiframentoRec{
 			resp = new String(wchar);
 		else if(wchar[i] != '\uFFFD'){
 			wchar[i] = (char) (wchar[i] + 3);
-			resp = cifra(wchar,i + 1,e);
+			resp = cifra(wchar,i + 1);
 		}
 		else{
-			resp = cifra(wchar,i + 1,e);
+			resp = cifra(wchar,i + 1);
 		}
 		return resp;
 

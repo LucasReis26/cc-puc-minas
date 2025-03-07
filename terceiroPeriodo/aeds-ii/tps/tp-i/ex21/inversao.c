@@ -3,12 +3,6 @@
 #include <wchar.h>
 #include <locale.h>
 
-int wslen(wchar_t *w){
-	int count = 0;
-	while(w[count] != L'\0')
-		count++;
-	return count;
-}
 int slen(char *w){
 	int count = 0;
 	while(w[count] != L'\0')
@@ -57,14 +51,14 @@ int wstrcmp(char *w1, char *w2){
 	return resp;
 }
 int main(){
-	setlocale(LC_ALL,"pt_BR.UTF-8");
+	setlocale(LC_ALL,"en_US.UTF-8");
 	char *w = (char *)malloc(256*sizeof(char));
 	wchar_t *newString = (wchar_t *)malloc(256*sizeof(wchar_t));
 
 	readLine(w);
 	while(wstrcmp(w,"FIM") != 0){
 		mbstowcs(newString,w,256);
-		int wlen = wslen(newString);
+		int wlen = wcslen(newString);
 		invertString(newString,0,wlen);
 		wprintf(L"%ls\n",newString);
 		readLine(w);

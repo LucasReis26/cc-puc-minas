@@ -13,7 +13,7 @@ int main(){
 		fwrite(&number,sizeof(float),1,file);
 	}
 	fclose(file);
-	file = fopen(filePath,"rb");
+	file = fopen("arquivo.txt","rb");
 	for(int i = quantidade - 1; i >= 0; i--){
 		float numberR;
 		fseek(file,sizeof(float) * i,SEEK_SET);

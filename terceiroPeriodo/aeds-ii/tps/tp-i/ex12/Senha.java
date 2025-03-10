@@ -113,7 +113,7 @@ public class Senha{
 			if(verificaSenha(w))
 				System.out.println("SIM");
 			else
-				System.out.println("NÃO ");
+				System.out.println("NAO ");
 
 			w = sc.nextLine();
 		}

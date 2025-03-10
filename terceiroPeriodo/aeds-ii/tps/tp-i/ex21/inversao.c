@@ -3,69 +3,71 @@
 #include <wchar.h>
 #include <locale.h>
 
-int slen(char *w){
+int wslen(wchar_t *w){
 	int count = 0;
 	while(w[count] != L'\0')
 		count++;
 	return count;
 }
-void removeE(char *w){
-	int wlen = slen(w);
-	for(int i = 0; i < wlen; i++){
-		if(w[i] == '\n')
-			w[i] = '\0';
+void readLine(wchar_t *w){
+	fgetws(w,256,stdin);
+	int len = wslen(w);
+	for(int i = 0; i < len; i++){
+		if(w[i] == L'\n')
+			w[i] = L'\0';
 	}
 }
-void readLine(char *w){
-	fgets(w,256,stdin);
-	removeE(w);
+void convertToInt(int *array, int len, wchar_t *w){
+	for(int i = 0; i < len; i++){
+		array[i] = (int) w[i];
+	}
 }
-
-void invertString(wchar_t *w,int i,int len){
-	if(i < len/2){
-		wchar_t tmp = w[i];
-		w[i] = w[len - i - 1];
-		w[len - i - 1] = tmp; 
-		invertString(w,i + 1,len);
-	}	
+void convertToWchar(wchar_t *array, int len, int *w){
+	for(int i = 0; i < len; i++){
+		array[i] = (wchar_t) w[i];
+	}
 }
-int wstrcmp(char *w1, char *w2){
-	int wlen1 = slen(w1),
-		wlen2 = slen(w2),
-		min = (wlen1 < wlen2) ? wlen1 : wlen2,
+void invertIntString(int *array, int len, int i){
+	if(i < (len/2)){
+		int tmp = array[i];
+		array[i] = array[len - i - 1];
+		array[len - i - 1] = tmp;
+		invertIntString(array,len,++i);
+	}
+}
+int my_wcscmp(wchar_t *w1, wchar_t *w2){
+	int wlen1 = wslen(w1),
+		wlen2 = wslen(w2),
+		minLen = (wlen1 < wlen2) ? wlen1 : wlen2,
 		resp = 0;
 
-	for(int i = 0; i < min; i++){
+	for(int i = 0; i < minLen; i++){
 		if(w1[i] < w2[i]){
 			resp = -1;
-			i = min;
+			i = minLen;
 		}else if(w1[i] > w2[i]){
 			resp = 1;
-			i = min;
+			i = minLen;
 		}
 	}
 	if(resp == 0 && wlen1 != wlen2){
 		resp = (wlen1 < wlen2) ? -1 : 1;
 	}
-
 	return resp;
 }
 int main(){
-	setlocale(LC_ALL,"en_US.UTF-8");
-	char *w = (char *)malloc(256*sizeof(char));
-	wchar_t *newString = (wchar_t *)malloc(256*sizeof(wchar_t));
-
+	setlocale(LC_ALL,"pt_BR.UTF-8");
+	wchar_t *w = (wchar_t *)malloc(256*sizeof(wchar_t));
 	readLine(w);
-	while(wstrcmp(w,"FIM") != 0){
-		mbstowcs(newString,w,256);
-		int wlen = wcslen(newString);
-		invertString(newString,0,wlen);
-		wprintf(L"%ls\n",newString);
+	while(my_wcscmp(w,L"FIM") != 0){
+		int len = wslen(w);
+		int *wInt = (int *)malloc(wslen(w) * sizeof(int));
+		convertToInt(wInt, len, w);
+		invertIntString(wInt,len,0);
+		convertToWchar(w,len,wInt);
+		wprintf(L"%ls\n",w);
+		free(wInt);
 		readLine(w);
 	}
-
 	free(w);
-	free(newString);
-	
-	return 0;
 }

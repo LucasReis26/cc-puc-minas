@@ -1,4 +1,4 @@
-// package ex11;
+package ex11;
 
 import java.util.Scanner;
 
@@ -34,24 +34,33 @@ public class Substring{
 		char[] wchar = new char[wlen];
 
 		for(int i = 0, l = 0; i < wlen; i++, l++){
-			if(l == 0){
+			if(l == 0 && i == 0){
+				System.out.println("Inserindo " + w.charAt(i) + " no array");
 				wchar[l] = w.charAt(i);
 				count++;
+				System.out.println("Count: " + count);
 			}else{
+				System.out.println("Procurando " + w.charAt(i) + " no array");
 				Boolean found = false;
-				for(int j = 0; j < count; j++){
+				for(int j = 0; j <  count; j++){
 					if(w.charAt(i) == wchar[j]){
 						if(maior < count){
 							maior = count;
 						}
 						found = true;
 						j = count;
-						count = 0;
+						System.out.println("Encontrei na posição " + j + " " + wchar[j] + " adicionando " + w.charAt(i) + " na posição 0 do array ");
+						l = 0;
+						wchar[l] = w.charAt(i);
+						count = 1;
+						System.out.println("Count: " + count);
 					}
 				}
 				if(!found){
+					System.out.println("Não encontrado, adicionando ao array");
 					wchar[l] = w.charAt(i);
 					count++;
+					System.out.println("Count: " + count);
 				}
 			}
 		}

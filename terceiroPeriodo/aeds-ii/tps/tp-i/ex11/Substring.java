@@ -29,30 +29,31 @@ public class Substring{
 	public static Integer subCount(String w){
 		Integer maior = 0,
 				count = 1,
-				wlen = w.length();
-
+				wlen = w.length(),
+				lastCharacter = 0;
 		boolean notFound = false;
 
 		char[] wchar = w.toCharArray();
 
 		for(int i = 0; i < wchar.length; i++){
-			for(int j = i + 1; j <= count; j++){
+			for(int j = i + 1; j < wchar.length; j++){
 				if(w.charAt(i) != w.charAt(j)){
 					count++;
+					lastCharacter = i;
 					notFound = true;
 				}else{
+					i = lastCharacter;
 					notFound =false;
 					if(maior < count)
 						maior = count;
 					j = wlen;
 					count = 1;
 				}
-				if(j + 1 >= wchar.length){
-					j = wlen;
-				}
+				
 			}
 			if(notFound){
 				maior = (maior < count) ? count : maior;
+				i = wchar.length;
 			}
 		}
 		maior = (maior < count) ? count : maior;

@@ -28,44 +28,35 @@ public class Substring{
 	}
 	public static Integer subCount(String w){
 		Integer maior = 0,
-				count = 0,
+				count = 1,
 				wlen = w.length();
 
-		char[] wchar = new char[wlen];
+		boolean notFound = false;
 
-		for(int i = 0, l = 0; i < wlen; i++, l++){
-			if(l == 0 && i == 0){
-				System.out.println("Inserindo " + w.charAt(i) + " no array");
-				wchar[l] = w.charAt(i);
-				count++;
-				System.out.println("Count: " + count);
-			}else{
-				System.out.println("Procurando " + w.charAt(i) + " no array");
-				Boolean found = false;
-				for(int j = 0; j <  count; j++){
-					if(w.charAt(i) == wchar[j]){
-						if(maior < count){
-							maior = count;
-						}
-						found = true;
-						j = count;
-						System.out.println("Encontrei na posição " + j + " " + wchar[j] + " adicionando " + w.charAt(i) + " na posição 0 do array ");
-						l = 0;
-						wchar[l] = w.charAt(i);
-						count = 1;
-						System.out.println("Count: " + count);
-					}
-				}
-				if(!found){
-					System.out.println("Não encontrado, adicionando ao array");
-					wchar[l] = w.charAt(i);
+		char[] wchar = w.toCharArray();
+
+		for(int i = 0; i < wchar.length; i++){
+			for(int j = i + 1; j <= count; j++){
+				if(w.charAt(i) != w.charAt(j)){
 					count++;
-					System.out.println("Count: " + count);
+					notFound = true;
+				}else{
+					notFound =false;
+					if(maior < count)
+						maior = count;
+					j = wlen;
+					count = 1;
+				}
+				if(j + 1 >= wchar.length){
+					j = wlen;
 				}
 			}
+			if(notFound){
+				maior = (maior < count) ? count : maior;
+			}
 		}
-		if(maior < count)
-			maior = count;
+		maior = (maior < count) ? count : maior;
+
 
 		return maior;
 	}

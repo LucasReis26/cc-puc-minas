@@ -67,7 +67,7 @@ public class Anagrama{
 			if(verifyAnagram(word1,word2))
 				System.out.println("SIM");
 			else
-				MyIO.println("NÃO");
+				System.out.println("N\u00c3O");
 
 			word1 = sc.next();
 		}

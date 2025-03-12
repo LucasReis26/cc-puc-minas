@@ -1,4 +1,4 @@
-// package ex05;
+package ex05;
 
 import java.util.Scanner;
 
@@ -20,7 +20,7 @@ public class Algebra{
 				binaryValues[i] = sc.nextInt();
 
 			}
-			// sc.nextLine();
+			sc.nextLine();
 
 			String bExpression = sc.nextLine();
 
@@ -149,7 +149,7 @@ public class Algebra{
 				}
 					// bExpression = new String(cbExp);
 					// System.out.println(bExpression);
-					response = cbExp[1];
+					response = cbExp[0];
 			}
 
 			bExpression = new String(cbExp);

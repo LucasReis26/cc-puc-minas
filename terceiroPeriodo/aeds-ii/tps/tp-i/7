@@ -1,4 +1,4 @@
-// package ex13;
+package ex13;
 
 import java.util.Scanner;
 import java.net.*;
@@ -76,55 +76,55 @@ public class Leitura{
 				case 'u':
 					dados[4]++;
 					break;
-				case '\u00E1':
+				case 'á':
 					dados[5]++;
 					break;
-				case '\u00E9':
+				case 'é':
 					dados[6]++;
 					break;
-				case '\u00ED':
+				case 'í':
 					dados[7]++;
 					break;
-				case '\u00F3':
+				case 'ó':
 					dados[8]++;
 					break;
-				case '\u00FA':
+				case 'ú':
 					dados[9]++;
 					break;
-				case '\u00E0':
+				case 'à':
 					dados[10]++;
 					break;
-				case '\u00E8':
+				case 'è':
 					dados[11]++;
 					break;
-				case '\u00EC':
+				case 'ì':
 					dados[12]++;
 					break;
-				case '\u00F2':
+				case 'ò':
 					dados[13]++;
 					break;
-				case '\u00F9':
+				case 'ù':
 					dados[14]++;
 					break;
-				case '\u00E3':
+				case 'ã':
 					dados[15]++;
 					break;
-				case '\u00F5':
+				case 'õ':
 					dados[16]++;
 					break;
-				case '\u00E2':
+				case 'â':
 					dados[17]++;
 					break;
-				case '\u00EA':
+				case 'ê':
 					dados[18]++;
 					break;
-				case '\u00EE':
+				case 'î':
 					dados[19]++;
 					break;
-				case '\u00F4':
+				case 'ô':
 					dados[20]++;
 					break;
-				case '\u00FB':
+				case 'û':
 					dados[21]++;
 					break;
 				case '<':
@@ -138,7 +138,7 @@ public class Leitura{
 					}
 					break;
 			}
-			char[] vogais = {'a', 'e', 'i', 'o', 'u', '\u00E1', '\u00E9', '\u00ED', '\u00F3', '\u00FA', '\u00E0', '\u00E8', '\u00EC', '\u00F2', '\u00F9', '\u00E3', '\u00F5', '\u1EBD', '\u0129', '\u0169', '\u00E2', '\u00EA', '\u00EE', '\u00F4', '\u00FB'};
+			char[] vogais = {'a', 'e', 'i', 'o', 'u', 'á', 'é', 'í', 'ó', 'ú', 'ã', 'ẽ', 'ĩ', 'õ', 'ũ', 'à', 'è', 'ì', 'ò', 'ò', 'ù', 'â', 'ê', 'î', 'ô', 'û'};
 			int vogaisLen = vogais.length;
 
 			boolean consoante = false;
@@ -156,7 +156,6 @@ public class Leitura{
 		}
 	}
 	public static void main(String[] args){
-		
 		Scanner sc  = new Scanner(System.in,"UTF-8");
 
 		String pageName = sc.nextLine();

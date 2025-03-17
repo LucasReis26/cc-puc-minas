@@ -1,4 +1,4 @@
-package ex11;
+// package ex11;
 
 import java.util.Scanner;
 
@@ -27,39 +27,27 @@ public class Substring{
 		return resp;
 	}
 	public static Integer subCount(String w){
-		Integer maior = 0,
-				count = 1,
-				wlen = w.length(),
-				lastCharacter = 0;
-		boolean notFound = false;
-
-		char[] wchar = w.toCharArray();
-
-		for(int i = 0; i < wchar.length; i++){
-			for(int j = i + 1; j < wchar.length; j++){
-				if(w.charAt(i) != w.charAt(j)){
-					count++;
-					lastCharacter = i;
-					notFound = true;
-				}else{
-					i = lastCharacter;
-					notFound =false;
-					if(maior < count)
-						maior = count;
-					j = wlen;
-					count = 1;
-				}
-				
-			}
-			if(notFound){
-				maior = (maior < count) ? count : maior;
-				i = wchar.length;
-			}
+		int[] freq = new int[128];
+		for(int i = 0; i < 128; i++){
+			freq[i] = -1;
 		}
-		maior = (maior < count) ? count : maior;
+		int len = w.length(),
+			maxLen = 0,
+			left = 0;
 
+		for(int right = 0; right < len; right++){
+			freq[w.charAt(right)]++;
 
-		return maior;
+			while(freq[w.charAt(right)] > 0){
+				freq[w.charAt(left)]--;
+
+				left++;
+			}
+
+			maxLen = (maxLen < (right - left + 1)) ? (right - left + 1) : maxLen;
+		}
+
+		return maxLen;
 	}
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in,"UTF-8");

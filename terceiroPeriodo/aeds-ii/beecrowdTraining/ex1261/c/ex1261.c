@@ -13,11 +13,9 @@ int main(){
 	
 	for(int i = 0; i < quant_palavras; i++){
 		words[i] = (char *)malloc(255*sizeof(char));
-		// printf("O valor do i é: %d\n",i);
 		scanf("%s",words[i]);
 		scanf("%d",&values[i]);
 		getchar();
-		// printf("Palavra: %s, custa: %d\n",words[i],values[i]);
 	}
 
 	for(int i = 0; i < quant_descricoes; i++){
@@ -27,12 +25,9 @@ int main(){
 
 		do{
 			scanf("%s",w);
-			// printf("Palavra escaneada: %s\n",w);
 			for(int j = 0; j < quant_palavras; j++){
-				// printf("Palavra testada: %s\n",words[j]);
 				if(strcmp(w,words[j]) == 0){
 					descriptionValue += values[j];
-					// printf("%s eh igual a %s\n",w,words[j]);
 					j = quant_palavras;
 				}
 			}
@@ -45,9 +40,9 @@ int main(){
 
 	}
 
-	// for(int i = 0; i < quant_palavras; i++){
-	// 	free(words[i]);
-	// }
+	for(int i = 0; i < quant_palavras; i++){
+		free(words[i]);
+	}
 	free(words);
 	free(values);
 

@@ -1,4 +1,4 @@
-package ex01.java;
+package ex02.java;
 
 import java.util.Scanner;
 
@@ -20,7 +20,7 @@ class Paises{
 	}
 }
 
-public class Ex01{
+public class Ex02{
 
 	public static void ordenador(Paises[] p){
 		Integer len = p.length;

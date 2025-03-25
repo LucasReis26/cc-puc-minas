@@ -157,8 +157,7 @@ read -p "Digite o número da questão que você quer testar: " num
 echo ""
 echo "Escolha a linguagem que você quer testar:"
 echo " 1 - C;"
-echo " 2 - C++;"
-echo " 3 - Java;"
+echo " 2 - Java;"
 read -p "Sua escolha: " lang
 clear
 
@@ -166,9 +165,6 @@ if [ "$lang" == 1 ]
 then
 	testC
 elif [ "$lang" == 2 ]
-then
-	testCpp
-elif [ "$lang" == 3 ]
 then
 	testJava
 else

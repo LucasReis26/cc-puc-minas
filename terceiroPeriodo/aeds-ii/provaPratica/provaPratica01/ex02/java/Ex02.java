@@ -35,28 +35,34 @@ public class Ex02{
 						v4 = (p[j].ouros == p[j + 1].ouros),
 						v5 = (p[j].pratas == p[j + 1].pratas),
 						v6 = (p[j].bronzes == p[j + 1].bronzes),
-						v7 = (p[j].name.compareTo(p[j+1].name) == -1);
+						v7 = (p[j].name.compareTo(p[j+1].name) > 0);
 
 				if(v1){
 					swapped = true;
 					Paises tmp = p[j];
 					p[j] = p[j+1];
 					p[j + 1] = tmp;
-				}else if(v2){
-					swapped = true;
-					Paises tmp = p[j];
-					p[j] = p[j+1];
-					p[j + 1] = tmp;
-				}else if(v3){
-					swapped = true;
-					Paises tmp = p[j];
-					p[j] = p[j+1];
-					p[j + 1] = tmp;
-				}else if(v4 && v5 && v6 && v7){
-					swapped = true;
-					Paises tmp = p[j];
-					p[j] = p[j+1];
-					p[j + 1] = tmp;
+				}else if(v4){
+					if(v2){
+						swapped = true;
+						Paises tmp = p[j];
+						p[j] = p[j+1];
+						p[j + 1] = tmp;
+					}else if(v5){
+						if(v3){
+							swapped = true;
+							Paises tmp = p[j];
+							p[j] = p[j+1];
+							p[j + 1] = tmp;
+						}else if(v6){
+							if(v7){
+								swapped = true;
+								Paises tmp = p[j];
+								p[j] = p[j+1];
+								p[j + 1] = tmp;
+							}
+						}
+					}
 				}
 			}
 			if(!swapped){

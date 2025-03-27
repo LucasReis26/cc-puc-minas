@@ -24,7 +24,8 @@ public class Ex1382{
 			Integer tmp = arr[i];
 			arr[i] = arr[menor];
 			arr[menor] = tmp;
-			count++;
+			if(menor != i)
+				count++;
 		}
 
 		return count;

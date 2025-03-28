@@ -48,7 +48,7 @@ int main(){
 
 			std::cin >> nome >> peso >> idade >> altura;
 
-			renas[0] = Rena(nome,peso,idade,altura);
+			renas[j] = Rena(nome,peso,idade,altura);
 		}
 
 		delete[] renas;

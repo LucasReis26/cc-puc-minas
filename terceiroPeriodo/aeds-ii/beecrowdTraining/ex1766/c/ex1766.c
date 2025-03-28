@@ -15,10 +15,19 @@ void leRenas(RENA *x){
 	scanf("%s %d %d %f",x->nome,&x->peso,&x->idade,&x->altura);
 }
 
+int my_strlen(char *w){
+	int count = 0;
+
+	while(w[count] != '\0')
+		count++;
+
+	return count;
+}
+
 int my_strcmp(char *w1, char *w2){
 
-	int len1 = sizeof(w1),
-		len2 = sizeof(w2),
+	int len1 = my_strlen(w1),
+		len2 = my_strlen(w2),
 		min = (len1 < len2) ? len1 : len2,
 		resp = 0;
 
@@ -45,9 +54,8 @@ int my_strcmp(char *w1, char *w2){
 	return resp;
 }
 
-void ordenaRenas(RENA *array){
+void ordenaRenas(RENA *array, int len){
 
-	int len = sizeof(array);
 
 	for(int i = 0; i < len; i++){
 
@@ -71,7 +79,7 @@ void ordenaRenas(RENA *array){
 
 						maior = j;
 
-					}else if(array[maior].altura) == array[j].altura){
+					}else if(array[maior].altura == array[j].altura){
 
 						if(my_strcmp(array[maior].nome,array[j].nome) == 1){
 
@@ -84,6 +92,10 @@ void ordenaRenas(RENA *array){
 				}
 			}
 		}
+
+		RENA aux = array[i];
+		array[i] = array[maior];
+		array[maior] = aux;
 	}
 }
 
@@ -109,7 +121,11 @@ int main(){
 			leRenas(&renas[j]);
 		}
 
-		ordenaRenas(renas);
+		ordenaRenas(renas,totalRenas);
+
+		for(int j = 0; j < renasTreno; j++){
+			printf("%d - %s\n",(j + 1),renas[j].nome);
+		}
 
 		free(renas);
 	}

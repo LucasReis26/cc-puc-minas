@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iomanip>
 #include <string>
 
 class Rena{
@@ -63,7 +62,7 @@ int my_strcmp(std::string w1, std::string w2){
 
 }
 
-int verificaMaior(Rena array,int i, int j){
+int verificaMaior(Rena *array,int i, int j){
 
 	int resp = i;
 	bool v = false;
@@ -104,16 +103,14 @@ int verificaMaior(Rena array,int i, int j){
 	}
 
 	if(!v && my_strcmp(array[i].nome, array[j].nome) != 0){
-		resp = i;
+		resp = j;
 		v = true;
 	}
 
 	return resp;
 }
 
-void ordenaRenas(Rena *array){
-
-	int len = sizeof(array) / sizeof(Rena);
+void ordenaRenas(Rena *array, int len){
 
 	for(int i = 0; i < len; i++){
 
@@ -151,6 +148,12 @@ int main(){
 		for(int j = 0; j < totalRenas; j++){
 
 			leRenas(&renas[j]);
+		}
+
+		ordenaRenas(renas, totalRenas);
+
+		for(int j = 0; j < renasTreno; j++){
+			std::cout << j + 1 << " - " << renas[j].nome << std::endl;
 		}
 
 

@@ -23,8 +23,8 @@ class Reindeer{
 		this.height = height;
 	}
 
-	public void print(){
-		System.out.println(this.name);
+	public void print(Integer i){
+		System.out.println(i + " - " + this.name);
 	}
 }
 
@@ -45,7 +45,7 @@ public class Ex1766{
 		}
 	}
 
-	public static void checkBigger(Reindeer[] array, Integer bigger, Integer j){
+	public static Integer checkBigger(Reindeer[] array, Integer bigger, Integer j){
 		Integer ans = bigger;
 		Boolean v = false;
 
@@ -101,7 +101,7 @@ public class Ex1766{
 
 			for(int j = i+1; j < len; j++){
 
-				i = checkBigger(array,bigger,j);
+				bigger = checkBigger(array,bigger,j);
 			}
 
 			Reindeer aux = array[i];
@@ -127,8 +127,10 @@ public class Ex1766{
 			sortReindeer(reindeer);
 			
 			System.out.println("CENARIO {" + (i + 1) + "}");
+
 			for(int j = 0; j < sledReindeer; j++){
-				reindeer[j].print
+
+				reindeer[j].print(j + 1);
 			}
 		}
 

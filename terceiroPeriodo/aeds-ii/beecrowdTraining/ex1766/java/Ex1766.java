@@ -31,6 +31,7 @@ class Reindeer{
 public class Ex1766{
 
 	public static void readReindeer(Reindeer[] array, Scanner sc){
+
 		Integer len = array.length;
 
 		for(int i = 0; i < len; i++){
@@ -41,6 +42,71 @@ public class Ex1766{
 			Double height = sc.nextDouble();
 
 			array[i] = new Reindeer(name,weight,yearsOld,height);
+		}
+	}
+
+	public static void checkBigger(Reindeer[] array, Integer bigger, Integer j){
+		Integer ans = bigger;
+		Boolean v = false;
+
+		if(!v && array[bigger].weight > array[j].weight){
+			ans = bigger;
+			v = true;
+		}
+
+		if(!v && array[bigger].weight != array[j].weight){
+			ans = j;
+			v = true;
+		}
+
+		if(!v && array[bigger].yearsOld < array[j].yearsOld){
+			ans = bigger;
+			v = true;
+		}
+
+		if(!v && array[bigger].yearsOld != array[j].yearsOld){
+			ans = j;
+			v = true;
+		}
+
+		if(!v && array[bigger].height < array[j].height){
+			ans = bigger;
+			v = true;
+		}
+
+		if(!v && array[bigger].height != array[j].height){
+			ans = j;
+			v = true;
+		}
+
+		if(!v && array[bigger].name.compareTo(array[j].name) < 0){
+			ans = bigger;
+			v = true;
+		}
+
+		if(!v && array[bigger].name.compareTo(array[j].name) != 0){
+			ans = j;
+			v = true;
+		}
+
+		return ans;
+	}
+
+	public static void sortReindeer(Reindeer[] array){
+		Integer len = array.length;
+
+		for(int i = 0; i < len; i++){
+
+			Integer bigger = i;
+
+			for(int j = i+1; j < len; j++){
+
+				i = checkBigger(array,bigger,j);
+			}
+
+			Reindeer aux = array[i];
+			array[i] = array[bigger];
+			array[bigger] = aux;
 		}
 	}
 
@@ -58,8 +124,12 @@ public class Ex1766{
 
 			readReindeer(reindeer,sc);
 
-			reindeer[0].print();
-
+			sortReindeer(reindeer);
+			
+			System.out.println("CENARIO {" + (i + 1) + "}");
+			for(int j = 0; j < sledReindeer; j++){
+				reindeer[j].print
+			}
 		}
 
 		sc.close();

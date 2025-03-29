@@ -38,8 +38,7 @@ void leRenas(Rena *x){
 
 }
 
-int my_strcmp(std::string w1, std::string w2){
-
+int my_strlen(std::string w1, std::string w2){
 	int len1 = w1.length(),
 		len2 = w2.length(),
 		min = (len1 < len2) ? len1 : len2,
@@ -59,13 +58,11 @@ int my_strcmp(std::string w1, std::string w2){
 		resp = (len1 < len2) ? -1 : 1;
 	}
 
-	return resp;
-
 }
 
 int verificaMaior(Rena array,int i, int j){
 
-	int resp = i;
+	int resp = 0;
 	bool v = false;
 
 	if(array[i].peso > array[j].peso){
@@ -97,18 +94,6 @@ int verificaMaior(Rena array,int i, int j){
 		resp = j;
 		v = true;
 	}
-
-	if(!v && my_strcmp(array[i].nome, array[j].nome) < 0){
-		resp = i;
-		v = true;
-	}
-
-	if(!v && my_strcmp(array[i].nome, array[j].nome) != 0){
-		resp = i;
-		v = true;
-	}
-
-	return resp;
 }
 
 void ordenaRenas(Rena *array){
@@ -124,10 +109,6 @@ void ordenaRenas(Rena *array){
 			maior = verificaMaior(array,maior,j);
 
 		}
-
-		Rena aux = array[i];
-		array[i] = array[maior];
-		array[maior] = aux;
 	}
 }
 

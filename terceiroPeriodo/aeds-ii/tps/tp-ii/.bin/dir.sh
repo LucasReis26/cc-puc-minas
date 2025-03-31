@@ -1,6 +1,6 @@
 #! /bin/bash
 
-source ./libs/criaPasta.sh
+source .bin/libs/criaPasta.sh
 
 clear
 

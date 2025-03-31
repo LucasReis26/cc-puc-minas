@@ -2,7 +2,7 @@
 
 clear
 
-source ./libs/testaPrograma.sh
+source .bin/libs/testaPrograma.sh
 
 read -p "Digite o número do exercício que você quer testar: " ex
 
@@ -20,7 +20,7 @@ else
 
 	echo $'\nERROR: O programa não existe!\n'
 
-	read -p "Pressione ENTER para continuar..." enter
+	read -p "Pressione ENTER para continuar..." 
 
 	clear
 

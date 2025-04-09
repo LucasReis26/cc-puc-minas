@@ -203,30 +203,40 @@ class Show {
 		char[][] splittedWords = new char[11][255];
 		for(int i = 0, k = 0, l = 0; i < len && k < 11; i++){
 			if(line.charAt(i) != ',' && line.charAt(i) != '"'){
+				System.out.print(line.charAt(i));
 				splittedWords[k][l++] = line.charAt(i);
 				
 			}else if(line.charAt(i) == ',' && line.charAt(i + 1) == ','){
-				i++;
+				System.out.println();
+				System.out.print("NaN");
+				// i++;
 				k++;
 				l = 0;
 				splittedWords[k][l] = 'N';
 				splittedWords[k][l + 1] = 'a';
 				splittedWords[k][l + 2] = 'N';
 
-			}else if(line.charAt(i) == ',' && line.charAt(i + 1) != ','){
+			}else if(line.charAt(i) == ',' && line.charAt(i + 1) != ',' && line.charAt(i + 1) != '"'){
 				k++;
 				l = 0;
+				System.out.println("FIM DA LINHA");
+				System.out.println(line.charAt(i + 1));
 
-			}else if(line.charAt(i) == ',' && line.charAt(i + 1) == '"'){
-				k++;
-				i+=2;
+			}else if(line.charAt(i)  == '"'){
+				System.out.println("ARRAY CHEGANDO");
+				i++;
+				// i+=2;
 				l = 0;
 
+				System.out.println(',');
 				while(line.charAt(i) != '"'){
+					System.out.print(line.charAt(i));
 					splittedWords[k][l++] = line.charAt(i++);
 				}
 			}
 		}
+		System.out.println();
+		System.out.println("Detectado: ");
 		for(int i = 0; i < 11; i++){
 			System.out.println((i + 1) + " - " + new String(splittedWords[i]));
 		}
@@ -238,6 +248,10 @@ public class Ex01{
 		Scanner sc = new Scanner(System.in);
 
 		String line = sc.nextLine();
+
+		System.out.println();
+		System.out.println("linha: " + line);
+		System.out.println();
 
 		Show show = new Show();
 

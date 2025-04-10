@@ -1,5 +1,7 @@
 public class Carro{
 	public static void main(String[] args){
+		StringBuilder sb = new StringBuilder();
+		sb.append("Ola mundo");
 		char[] word = new char[255];
 
 		word[0] = 'O';
@@ -12,9 +14,15 @@ public class Carro{
 		word[7] = 'd';
 		word[8] = 'o';
 
-		String string = new String(word);
+		String string = new String(sb);
 		String bonito = new String("bonito");
 
+		for(int i = 0; i < string.length(); i++){
+			System.out.println(sb.charAt(i));
+		}
+
 		System.out.println(string + ' ' + bonito);
+		Integer wordLen = string.length();
+		System.out.println(wordLen);
 	}
 }

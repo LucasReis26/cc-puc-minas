@@ -164,32 +164,33 @@ class Show {
 	}
 	public String listed_inToString(){
 		Integer quantidade = this.listed_in.length;
+		
+		System.out.println();
+		System.out.println(quantidade);
 
-		Integer len = 0;
+		// Integer len = 0;
+		//
+		// if(quantidade > 1){
+		// 	for(int i = 0; i < quantidade; i++){
+		// 		len += this.listed_in[i].length();
+		// 		if(i != quantidade - 1)
+		// 			len += 2;
+		// 	}
+		// }
+		//
+		// char[] resp = new char[len];
 
-		if(quantidade > 1){
-			for(int i = 0; i < quantidade; i++){
-				len += this.listed_in[i].length();
-				if(i != quantidade - 1)
-					len += 2;
-			}
-		}
-
-		char[] resp = new char[len];
+		StringBuilder sb = new StringBuilder();
 
 		for(int i = 0, k = 0; i < quantidade; i++){
 			Integer wordLen = this.listed_in[i].length();
-			for(int j = 0; j < wordLen; j++, k++){
-				resp[k] = this.listed_in[i].charAt(j);
-			}
+			sb.append(this.listed_in[i]);
 			if(i != quantidade - 1){
-				resp[k] = ','; 
-				resp[k + 1] = ' '; 
-				k += 2;
+				sb.append(", ");
 			}
 		}
 
-		return new String(resp);
+		return new String(sb);
 	}
 
 	public void imprimir() {
@@ -200,46 +201,176 @@ class Show {
 
 	public void ler(String line) {
 		Integer len = line.length();
-		char[][] splittedWords = new char[11][255];
+		String[] splittedWords = new String[11];
+		StringBuilder sb = new StringBuilder();
 		for(int i = 0, k = 0, l = 0; i < len && k < 11; i++){
-			if(line.charAt(i) != ',' && line.charAt(i) != '"'){
-				System.out.print(line.charAt(i));
-				splittedWords[k][l++] = line.charAt(i);
+			if(line.charAt(i) != ','){
+				if(line.charAt(i) == '"'){
+					i++;
+					while(line.charAt(i) != '"'){
+						sb.append(line.charAt(i++));
+					}
+				}else{
+					sb.append(line.charAt(i));
+				}
 				
 			}else if(line.charAt(i) == ',' && line.charAt(i + 1) == ','){
-				System.out.println();
-				System.out.print("NaN");
-				// i++;
+				splittedWords[k] = new String(sb);
+				sb = new StringBuilder();
 				k++;
 				l = 0;
-				splittedWords[k][l] = 'N';
-				splittedWords[k][l + 1] = 'a';
-				splittedWords[k][l + 2] = 'N';
+				sb.append("NaN");
+				splittedWords[k] = new String(sb);
 
-			}else if(line.charAt(i) == ',' && line.charAt(i + 1) != ',' && line.charAt(i + 1) != '"'){
+			}else if(line.charAt(i) == ',' && line.charAt(i + 1) != ','){
+				splittedWords[k] = new String(sb);
+				sb = new StringBuilder();
 				k++;
 				l = 0;
-				System.out.println("FIM DA LINHA");
-				System.out.println(line.charAt(i + 1));
-
-			}else if(line.charAt(i)  == '"'){
-				System.out.println("ARRAY CHEGANDO");
-				i++;
-				// i+=2;
-				l = 0;
-
-				System.out.println(',');
-				while(line.charAt(i) != '"'){
-					System.out.print(line.charAt(i));
-					splittedWords[k][l++] = line.charAt(i++);
-				}
 			}
 		}
 		System.out.println();
 		System.out.println("Detectado: ");
 		for(int i = 0; i < 11; i++){
-			System.out.println((i + 1) + " - " + new String(splittedWords[i]));
+			System.out.println((i + 1) + " - " + splittedWords[i]);
 		}
+
+		String l_show_id = "";
+		String l_type = "";
+		String l_title = "";
+		String l_director = "";
+		String[] l_cast = new String[1];
+		String l_country = "";
+		Date l_date_added = new Date();
+		Integer l_release_year = 0;
+		String l_rating = "";
+		String l_duration = "";
+		String[] l_listed_in = new String[1];
+
+		System.out.println();
+
+		for(int i = 0; i < 11; i++){
+			switch(i){
+				case 0:
+					l_show_id = new String(splittedWords[i]);
+					setShow_id(l_show_id);
+					System.out.println("SET SHOW ID " + l_show_id );
+					break;
+				case 1:
+					l_type = new String(splittedWords[i]);
+					setType(l_type);
+					System.out.println("SET TYPE " + l_type);
+					break;
+				case 2:
+					l_title = new String(splittedWords[i]);
+					setTitle(l_title);
+					System.out.println("SET TITLE " + l_title);
+					break;
+				case 3:
+					l_director = new String(splittedWords[i]);
+					setDirector(l_director);
+					System.out.println("SET DIRECTOR " + l_director);
+					break;
+				case 4:
+					Integer countCast = 1;
+					Integer castLen = splittedWords[i].length();
+
+					for(int j = 0; j < castLen; j++){
+						if(splittedWords[i].charAt(j) == ',')
+							countCast++;
+					}
+
+					l_cast = new String[countCast];
+					
+					sb = new StringBuilder();
+					for(int j = 0, k = 0; j < castLen; j++){
+						if(splittedWords[i].charAt(j) != ','){
+							sb.append(splittedWords[i].charAt(j));
+						}else if(splittedWords[i].charAt(j) == ','){
+							j++;
+							l_cast[k] = new String(sb);
+							System.out.println(l_cast[k]);
+							k++;
+							sb = new StringBuilder();
+						}
+						if(j == castLen - 1){
+							j++;
+							l_cast[k] = new String(sb);
+							System.out.println(l_cast[k]);
+							k++;
+							sb = new StringBuilder();
+						}
+					}
+
+					setCast(l_cast);
+					System.out.println("SET CAST " + l_cast[0]);
+					break;
+				case 5:
+					l_country = new String(splittedWords[i]);
+					setCountry(l_country);
+					System.out.println("SET COUNTRY " + l_country);
+					break;
+				case 6:
+					l_date_added = new Date(splittedWords[i]);
+					setDateAdded(l_date_added);
+					System.out.println("SET DATE " + l_date_added);
+					break;
+				case 7:
+					l_release_year = Integer.parseInt(splittedWords[i]);
+					setReleaseYear(l_release_year);
+					System.out.println("SET YEAR " + l_release_year);
+					break;
+				case 8:
+					l_rating = new String(splittedWords[i]);
+					setRating(l_rating);
+					System.out.println("SET RATING " + l_rating);
+					break;
+				case 9:
+					l_duration = new String(splittedWords[i]);
+					setDuration(l_duration);
+					System.out.println("SET DURATION " + l_duration);
+					break;
+				case 10:
+					Integer countListed_in = 1;
+					Integer listedLen = splittedWords[i].length();
+
+					for(int j = 0; j < listedLen; j++){
+						if(splittedWords[i].charAt(j) == ',')
+							countListed_in++;
+					}
+
+					l_listed_in = new String[countListed_in];
+					
+					sb = new StringBuilder();
+					for(int j = 0, k = 0; j < listedLen; j++){
+						if(splittedWords[i].charAt(j) != ','){
+							sb.append(splittedWords[i].charAt(j));
+						}else if(splittedWords[i].charAt(j) == ','){
+							j++;
+							l_listed_in[k] = new String(sb);
+							System.out.println(l_listed_in[k]);
+							k++;
+							sb = new StringBuilder();
+						}
+						if(j == listedLen - 1){
+							j++;
+							l_listed_in[k] = new String(sb);
+							System.out.println(l_listed_in[k]);
+							k++;
+							sb = new StringBuilder();
+						}
+					}
+
+					setListedIn(l_listed_in);
+					System.out.println("SET LISTED " + l_listed_in[0]);
+					break;
+			}
+		}
+	}
+
+	public Show clone(){
+		Show clone = new Show(this.show_id, this.type, this.title, this.director, this.cast, this.country, this.date_added, this.release_year, this.rating, this.duration, this.listed_in);
+		return clone;
 	}
 }
 
@@ -256,6 +387,7 @@ public class Ex01{
 		Show show = new Show();
 
 		show.ler(line);
+		show.imprimir();
 
 		sc.close();
 	}

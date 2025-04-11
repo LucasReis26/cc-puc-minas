@@ -1,8 +1,12 @@
 package ex01;
 
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
-import java.util.Scanner;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 class Show {
 	private String show_id;
@@ -79,6 +83,19 @@ class Show {
 	}
 
 	public void setCast(String[] cast) {
+		int len = cast.length;
+		for(int i = 0; i < len - 1; i++){
+			for(int j = 0; j < len - i - 1; j++){
+				String atual = cast[j];
+				String prox = cast[j + 1];
+
+				if(atual.compareTo(prox) > 0){
+					String aux = cast[j];
+					cast[j] = cast[j + 1];
+					cast[j + 1] = aux;
+				}
+			}
+		}
 		this.cast = cast;
 	}
 
@@ -166,9 +183,13 @@ class Show {
 	}
 
 	public void imprimir() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-		System.out.println("=> " + show_id + " ## " + type + " ## " + title + " ## " + director 
-			+ " ## [" + castToString() +"] ## " + country + " ## " + date_added.format(formatter) + " ## " + release_year 
+		String data = "NaN";
+		if(this.date_added != null){
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+			data = date_added.format(formatter);
+		}
+		System.out.println("=> " + show_id + " ## " + title + " ## " + type + " ## " + director 
+			+ " ## [" + castToString() +"] ## " + country + " ## " + data + " ## " + release_year 
 			+ " ## " + rating + " ## " + duration + " ## [" + listed_inToString() +"] ##");
 	}
 
@@ -202,11 +223,6 @@ class Show {
 				l = 0;
 			}
 		}
-		System.out.println();
-		System.out.println("Detectado: ");
-		for(int i = 0; i < 11; i++){
-			System.out.println((i + 1) + " - " + splittedWords[i]);
-		}
 
 		String l_show_id = "";
 		String l_type = "";
@@ -220,7 +236,6 @@ class Show {
 		String l_duration = "";
 		String[] l_listed_in = new String[1];
 
-		System.out.println();
 
 		for(int i = 0; i < 11; i++){
 			switch(i){
@@ -276,9 +291,13 @@ class Show {
 					setCountry(l_country);
 					break;
 				case 6:
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-					l_date_added = LocalDate.parse(splittedWords[i],formatter);
-					setDateAdded(l_date_added);
+					if(!splittedWords[i].equals("NaN")){
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+						l_date_added = LocalDate.parse(splittedWords[i],formatter);
+						setDateAdded(l_date_added);
+					}else{
+						setDateAdded(null);
+					}
 					break;
 				case 7:
 					l_release_year = Integer.parseInt(splittedWords[i]);
@@ -334,20 +353,28 @@ class Show {
 }
 
 public class Ex01{
-	public static void main(String[] args){
+	public static void main(String[] args) throws FileNotFoundException{
 		Scanner sc = new Scanner(System.in);
+		File arquivo = new File("/tmp/disneyplus.csv");
+		Scanner filesc = new Scanner(arquivo,"UTF-8");
+		filesc.nextLine();
 
-		String line = sc.nextLine();
+		Show[] shows = new Show[1368];
 
-		System.out.println();
-		System.out.println("linha: " + line);
-		System.out.println();
+		for(int i = 0; i < 1368; i++){
+			String line = filesc.nextLine();
+			shows[i] = new Show();
+			shows[i].ler(line);
+		}
 
-		Show show = new Show();
+		String getId = sc.nextLine();
+		while(!getId.equals("FIM")){
+			Integer id = Integer.parseInt(getId.substring(1,getId.length()));
+			shows[id - 1].imprimir();
+			getId = sc.nextLine();
+		}
 
-		show.ler(line);
-		show.imprimir();
-
+		filesc.close();
 		sc.close();
 	}
 }

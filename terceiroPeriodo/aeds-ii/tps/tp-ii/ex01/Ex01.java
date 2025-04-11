@@ -355,7 +355,7 @@ class Show {
 public class Ex01{
 	public static void main(String[] args) throws FileNotFoundException{
 		Scanner sc = new Scanner(System.in);
-		File arquivo = new File("tmp/disneyplus.csv");
+		File arquivo = new File("/tmp/disneyplus.csv");
 		Scanner filesc = new Scanner(arquivo,"UTF-8");
 		filesc.nextLine();
 

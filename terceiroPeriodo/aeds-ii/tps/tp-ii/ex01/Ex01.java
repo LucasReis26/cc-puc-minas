@@ -1,7 +1,8 @@
 package ex01;
 
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.Scanner;
-import java.util.Date;
 
 class Show {
 	private String show_id;
@@ -10,7 +11,7 @@ class Show {
 	private String director;
 	private String[] cast;
 	private String country;
-	private Date date_added;
+	private LocalDate date_added;
 	private Integer release_year;
 	private String rating;
 	private String duration;
@@ -23,7 +24,7 @@ class Show {
 		this.director = "";
 		this.cast = new String[1];
 		this.country = "";
-		this.date_added = new Date();
+		this.date_added = LocalDate.now();
 		this.release_year = 0;
 		this.rating = "";
 		this.duration = "";
@@ -31,7 +32,7 @@ class Show {
 	}
 
 	public Show(String show_id, String type, String title, String director, String[] cast, String country,
-			Date date_added, Integer release_year, String rating, String duration, String[] listed_in) {
+			LocalDate date_added, Integer release_year, String rating, String duration, String[] listed_in) {
 		this.show_id = show_id;
 		this.type = type;
 		this.title = title;
@@ -93,11 +94,11 @@ class Show {
 		return this.country;
 	}
 
-	public void setDateAdded(Date date_added) {
+	public void setDateAdded(LocalDate date_added) {
 		this.date_added = date_added;
 	}
 
-	public Date getDateAdded() {
+	public LocalDate getDateAdded() {
 		return this.date_added;
 	}
 
@@ -136,50 +137,21 @@ class Show {
 	public String castToString(){
 		Integer quantidade = this.cast.length;
 
-		Integer len = 0;
-
-		if(quantidade > 1){
-			for(int i = 0; i < quantidade; i++){
-				len += this.cast[i].length();
-				if(i != quantidade - 1)
-					len += 2;
-			}
-		}
-
-		char[] resp = new char[len];
+		StringBuilder sb = new StringBuilder();
 
 		for(int i = 0, k = 0; i < quantidade; i++){
 			Integer wordLen = this.cast[i].length();
-			for(int j = 0; j < wordLen; j++, k++){
-				resp[k] = this.cast[i].charAt(j);
-			}
+			sb.append(this.cast[i]);
 			if(i != quantidade - 1){
-				resp[k] = ','; 
-				resp[k + 1] = ' '; 
-				k += 2;
+				sb.append(", ");
 			}
 		}
 
-		return new String(resp);
+		return new String(sb);
 	}
 	public String listed_inToString(){
 		Integer quantidade = this.listed_in.length;
 		
-		System.out.println();
-		System.out.println(quantidade);
-
-		// Integer len = 0;
-		//
-		// if(quantidade > 1){
-		// 	for(int i = 0; i < quantidade; i++){
-		// 		len += this.listed_in[i].length();
-		// 		if(i != quantidade - 1)
-		// 			len += 2;
-		// 	}
-		// }
-		//
-		// char[] resp = new char[len];
-
 		StringBuilder sb = new StringBuilder();
 
 		for(int i = 0, k = 0; i < quantidade; i++){
@@ -194,8 +166,9 @@ class Show {
 	}
 
 	public void imprimir() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
 		System.out.println("=> " + show_id + " ## " + type + " ## " + title + " ## " + director 
-			+ " ## [" + castToString() +"] ## " + country + " ## " + date_added + " ## " + release_year 
+			+ " ## [" + castToString() +"] ## " + country + " ## " + date_added.format(formatter) + " ## " + release_year 
 			+ " ## " + rating + " ## " + duration + " ## [" + listed_inToString() +"] ##");
 	}
 
@@ -241,7 +214,7 @@ class Show {
 		String l_director = "";
 		String[] l_cast = new String[1];
 		String l_country = "";
-		Date l_date_added = new Date();
+		LocalDate l_date_added = LocalDate.now();
 		Integer l_release_year = 0;
 		String l_rating = "";
 		String l_duration = "";
@@ -254,22 +227,18 @@ class Show {
 				case 0:
 					l_show_id = new String(splittedWords[i]);
 					setShow_id(l_show_id);
-					System.out.println("SET SHOW ID " + l_show_id );
 					break;
 				case 1:
 					l_type = new String(splittedWords[i]);
 					setType(l_type);
-					System.out.println("SET TYPE " + l_type);
 					break;
 				case 2:
 					l_title = new String(splittedWords[i]);
 					setTitle(l_title);
-					System.out.println("SET TITLE " + l_title);
 					break;
 				case 3:
 					l_director = new String(splittedWords[i]);
 					setDirector(l_director);
-					System.out.println("SET DIRECTOR " + l_director);
 					break;
 				case 4:
 					Integer countCast = 1;
@@ -289,46 +258,39 @@ class Show {
 						}else if(splittedWords[i].charAt(j) == ','){
 							j++;
 							l_cast[k] = new String(sb);
-							System.out.println(l_cast[k]);
 							k++;
 							sb = new StringBuilder();
 						}
 						if(j == castLen - 1){
 							j++;
 							l_cast[k] = new String(sb);
-							System.out.println(l_cast[k]);
 							k++;
 							sb = new StringBuilder();
 						}
 					}
 
 					setCast(l_cast);
-					System.out.println("SET CAST " + l_cast[0]);
 					break;
 				case 5:
 					l_country = new String(splittedWords[i]);
 					setCountry(l_country);
-					System.out.println("SET COUNTRY " + l_country);
 					break;
 				case 6:
-					l_date_added = new Date(splittedWords[i]);
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+					l_date_added = LocalDate.parse(splittedWords[i],formatter);
 					setDateAdded(l_date_added);
-					System.out.println("SET DATE " + l_date_added);
 					break;
 				case 7:
 					l_release_year = Integer.parseInt(splittedWords[i]);
 					setReleaseYear(l_release_year);
-					System.out.println("SET YEAR " + l_release_year);
 					break;
 				case 8:
 					l_rating = new String(splittedWords[i]);
 					setRating(l_rating);
-					System.out.println("SET RATING " + l_rating);
 					break;
 				case 9:
 					l_duration = new String(splittedWords[i]);
 					setDuration(l_duration);
-					System.out.println("SET DURATION " + l_duration);
 					break;
 				case 10:
 					Integer countListed_in = 1;
@@ -348,21 +310,18 @@ class Show {
 						}else if(splittedWords[i].charAt(j) == ','){
 							j++;
 							l_listed_in[k] = new String(sb);
-							System.out.println(l_listed_in[k]);
 							k++;
 							sb = new StringBuilder();
 						}
 						if(j == listedLen - 1){
 							j++;
 							l_listed_in[k] = new String(sb);
-							System.out.println(l_listed_in[k]);
 							k++;
 							sb = new StringBuilder();
 						}
 					}
 
 					setListedIn(l_listed_in);
-					System.out.println("SET LISTED " + l_listed_in[0]);
 					break;
 			}
 		}

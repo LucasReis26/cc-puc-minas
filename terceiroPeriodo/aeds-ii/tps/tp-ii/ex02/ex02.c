@@ -190,13 +190,14 @@ void ler(SHOW *a, char *line){
 			atributos[k][l] = '\0';
 			l = 0;
 			k++;
-			if(i < len - 1 && line[i + 1] == ','){
+			while(line[i + 1] == ','){
 				atributos[k][l++] = 'N';
 				atributos[k][l++] = 'a';
 				atributos[k][l++] = 'N';
 				atributos[k][l] = '\0';
 				i++;
-				k++;
+				if(k < 11)
+					k++;
 				l = 0;
 			}
 			
@@ -393,10 +394,19 @@ void ler(SHOW *a, char *line){
 				}
 		}
 	}
+
 }
 
-void readLine(char *line,size_t maxsize, FILE *file){
-	fgets(line,maxsize,file);
+void readLine(char *line,int maxsize, FILE *file){
+	if (file == NULL) {
+		fprintf(stderr, "Erro: ponteiro de arquivo NULL passado para readLine().\n");
+		exit(1);
+	}
+
+	if (fgets(line, maxsize, file) == NULL) {
+		fprintf(stderr, "Erro ao ler linha do arquivo ou fim do arquivo atingido.\n");
+		exit(1);
+	}
 	size_t len = strlen(line);
 	if(line[len - 1] == '\n')
 		line[len - 1] = '\0';
@@ -428,31 +438,30 @@ int main(){
 
 	FILE *file = fopen("/tmp/disneyplus.csv", "r");
 
-	size_t lineSize = 1024;
-	char *line = (char *)malloc(lineSize * sizeof(char));
-	readLine(line,lineSize,file);
+	char *line = (char *)malloc(1024*sizeof(char));
+	while(fgetc(file) != '\n');
+
 	for(int i = 0; i < 1368; i++){
-		readLine(line,lineSize,file);
+		readLine(line, 1024,  file);
 
 		ler((shows + i),line);
 
 	}
-	size_t entrySize = 255;
-	char *entry = (char *)malloc(entrySize * sizeof(char));
+	free(line);
+	fclose(file);
+
+	char *entry = (char *)malloc(255 * sizeof(char));
 	scanf("%s",entry);
 	while(strcmp(entry,"FIM") != 0){
 		int id = atoi((entry + 1));
-		id--;
-		imprimir((shows + id));
+		imprimir((shows + (--id)));
 		scanf("%s",entry);
 	}
 	
 
-	fclose(file);
 	for(int i = 0; i < 1368; i++)
 		freeShow(shows + i);
 	free(shows);
-	free(line);
 
 	return 0;
 }

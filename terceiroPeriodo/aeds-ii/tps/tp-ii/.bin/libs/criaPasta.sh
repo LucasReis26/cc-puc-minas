@@ -20,9 +20,11 @@ criaPasta_m_10(){
 	if [ "$op" -eq 1 ]
 	then
 
-		unzip ~/Downlads/pubs.zip -d ./ex0$1/pubs/
+		unzip ~/Downloads/pubs.zip -d ./ex0$1/pubs/
 
 	fi
+
+	rm ~/Downloads/pubs.zip
 
 	echo $'\nPasta criada com sucesso!'
 

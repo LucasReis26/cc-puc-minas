@@ -1,4 +1,4 @@
-package ex03;
+// package ex03;
 
 import java.util.Scanner;
 import java.io.File;
@@ -379,7 +379,7 @@ public class Ex03{
 			getId = sc.nextLine();
 		}
 
-		arquivo = new File("./ex03/853431_sequencial.txt");
+		arquivo = new File("./853431_sequencial.txt");
 		Integer comparacoes = 0;
 		long inicio = System.nanoTime();
 

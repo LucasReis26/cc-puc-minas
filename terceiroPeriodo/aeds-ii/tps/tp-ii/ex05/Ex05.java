@@ -1,8 +1,9 @@
-// package ex01;
+package ex05;
 
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.io.IOException;
@@ -368,7 +369,42 @@ class Show {
 	}
 }
 
-public class Ex01{
+public class Ex05{
+	public static void ordenaSelecao(Show[] array, Integer tam){
+		File log = new File("./853431_selecao.txt");
+		try{
+			FileWriter logw = new FileWriter(log);
+
+			long inicio = System.nanoTime();
+			Integer movimentacoes = 0;
+			Integer comparacoes = 0;
+
+			for(int i = 0; i < tam - 1; i++){
+				int menor = i;
+				for(int j = i + 1; j < tam; j++){
+					comparacoes++;
+					if(array[menor].getTitle().compareToIgnoreCase(array[j].getTitle()) > 0){
+						menor = j;
+					}
+				}
+				if(menor != i){
+					movimentacoes++;
+					Show aux = array[menor];
+					array[menor] = array[i];
+					array[i] = aux;
+				}
+			}
+
+			long fim = System.nanoTime();
+			long duracao = fim - inicio;
+
+			logw.write("853431\t" + comparacoes + "\t" + movimentacoes + "\t" + duracao/1_000_000.0 );
+
+			logw.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
 	public static void main(String[] args) throws FileNotFoundException{
 		Scanner sc = new Scanner(System.in);
 		File arquivo = new File("/tmp/disneyplus.csv");
@@ -376,21 +412,27 @@ public class Ex01{
 		filesc.nextLine();
 
 		Show[] shows = new Show[1368];
-
 		for(int i = 0; i < 1368; i++){
 			String line = filesc.nextLine();
 			shows[i] = new Show();
 			shows[i].ler(line);
 		}
+		filesc.close();
 
 		String getId = sc.nextLine();
+		Show[] array = new Show[1368];
+		int array_tam = 0;
 		while(!getId.equals("FIM")){
 			Integer id = Integer.parseInt(getId.substring(1,getId.length()));
-			shows[id - 1].imprimir();
+			array[array_tam++] = shows[id - 1].clone();
 			getId = sc.nextLine();
 		}
 
-		filesc.close();
+		ordenaSelecao(array,array_tam);
+		for(int i = 0; i < array_tam; i++){
+			array[i].imprimir();
+		}
+
 		sc.close();
 	}
 }

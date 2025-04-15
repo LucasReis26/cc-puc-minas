@@ -25,6 +25,11 @@ typedef struct{
 	size_t listedLen;
 }SHOW;
 
+SHOW clone(SHOW show){
+	SHOW clone = show;
+	return clone;
+}
+
 int monthToInteger(char *w){
 	int resp = 0;
 
@@ -334,9 +339,9 @@ void ler(SHOW *a, char *line){
 						a->date_added.date = atoi(c_date);
 						a->date_added.year = atoi(c_year);
 					}else{
-						a->date_added.month = 0;
-						a->date_added.date = 0;
-						a->date_added.year = 0;
+						a->date_added.month = 3;
+						a->date_added.date = 1;
+						a->date_added.year = 1900;
 					}
 					break;
 				}
@@ -384,6 +389,19 @@ void ler(SHOW *a, char *line){
 									j++;
 								}
 							}
+						}
+
+						size_t s_len = a->listedLen;
+						for(int j = 0; j < s_len - 1; j++){
+							int menor = j;
+							for(int k = j + 1; k < s_len; k++){
+								if(strcmp(a->listed_in[k],a->listed_in[menor]) < 0){
+									menor = k;
+								}
+							}
+							char *aux = a->listed_in[j];
+							a->listed_in[j] = a->listed_in[menor];
+							a->listed_in[menor] = aux;
 						}
 
 					}else{

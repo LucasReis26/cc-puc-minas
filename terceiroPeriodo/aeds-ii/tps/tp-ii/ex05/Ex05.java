@@ -1,4 +1,4 @@
-package ex05;
+// package ex05;
 
 import java.util.Scanner;
 import java.io.File;

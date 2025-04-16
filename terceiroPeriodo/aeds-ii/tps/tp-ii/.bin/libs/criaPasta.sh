@@ -56,7 +56,8 @@ criaPasta_M_10(){
 	if [ "$op" -eq 1 ]
 	then
 
-		unzip ~/Downlads/pubs.zip -d ./ex$1/pubs/
+		unzip ~/Downloads/pubs.zip -d ./ex$1/pubs/
+		rm ~/Downloads/pubs.zip
 
 	fi
 

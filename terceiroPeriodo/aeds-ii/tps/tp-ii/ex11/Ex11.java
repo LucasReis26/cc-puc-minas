@@ -371,16 +371,10 @@ class Show {
 
 public class Ex11{
 	public static Integer getMaiorAno(Show[] array,int len){
-		int maior;
-
-		if(array[0].getReleaseYear() != null){
-			maior = array[0].getReleaseYear();
-		}else{
-			maior = 0;
-		}
+		int maior = array[0].getReleaseYear();
 
 		for(int i = 1; i < len; i++){
-			if(array[i].getReleaseYear() != null){
+			if(array[i].getReleaseYear() > maior){
 				maior = array[i].getReleaseYear();
 			}
 		}

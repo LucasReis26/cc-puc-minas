@@ -546,7 +546,7 @@ bool verifica(SHOW tmp, SHOW j, int *comp){
 void ordenaInsercao(SHOW *array, int len,int *mov, int *comp){
 	for(int i = 1; i < len; i++){
 		SHOW tmp = array[i];
-		int j = i - 1;
+		int j = (i < 10) ? i - 1 : 10 - 1;
 
 		while(j >= 0 && verifica(tmp, array[j], comp)){
 			*mov += 1;
@@ -579,7 +579,7 @@ int main(){
 	char *entry = (char *)malloc(255 * sizeof(char));
 	scanf("%s",entry);
 
-	SHOW *array = (SHOW *)calloc(1368,sizeof(SHOW));
+	SHOW array[1368];
 	int tam_array = 0;
 
 	while(strcmp(entry,"FIM") != 0){
@@ -606,9 +606,6 @@ int main(){
 
 	for(int i = 0; i < 1368; i++)
 		freeShow(shows + i);
-	for(int i = 0; i < 1368; i++){
-		freeShow(array + i);
-	}
 	free(shows);
 
 	return 0;

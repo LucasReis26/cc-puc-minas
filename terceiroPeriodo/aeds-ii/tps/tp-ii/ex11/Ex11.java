@@ -1,4 +1,4 @@
-// package ex11;
+package ex11;
 
 import java.util.Scanner;
 import java.io.File;
@@ -380,6 +380,7 @@ public class Ex11{
 		}
 		return maior;
 	}
+
 	public static Show[] ordenaCountingSort(Show[] array, Integer tam){
 		File log = new File("./853431_countingsort.txt");
 		Show[] ordenado = new Show[tam];
@@ -395,23 +396,6 @@ public class Ex11{
 
 			int countlen = count.length;
 
-			//Ordena por titulo primeiro
-			for(int i = 0; i < tam - 1; i++){
-				int menor = i;
-				for(int j = i + 1; j < tam; j++){
-					comparacoes++;
-					if(array[menor].getTitle().compareToIgnoreCase(array[j].getTitle()) > 0){
-						menor = j;
-					}
-				}
-				if(menor != i){
-					movimentacoes++;
-					Show aux = array[menor];
-					array[menor] = array[i];
-					array[i] = aux;
-				}
-			}
-
 			for(int i = 0; i < countlen; count[i++] = 0);
 			
 
@@ -423,6 +407,23 @@ public class Ex11{
 
 			for(int i = tam - 1; i >= 0;ordenado[count[array[i].getReleaseYear()] - 1] = array[i],count[array[i].getReleaseYear()]-- , i--, movimentacoes++);
 
+			for(int i = 1; i < tam; i++){
+				Show tmp = ordenado[i];
+				int j = i - 1;
+
+				while(j >= 0 && 
+					(tmp.getReleaseYear().equals(ordenado[j].getReleaseYear())) &&
+					(tmp.getTitle().compareToIgnoreCase(ordenado[j].getTitle()) < 0)){
+					comparacoes += 2;
+					movimentacoes++;
+					ordenado[j + 1] = ordenado[j];
+					j--;
+				}
+				if(i != (j + 1)){
+					movimentacoes++;
+					ordenado[j + 1] = tmp;
+				}
+			}
 			
 
 			long fim = System.nanoTime();

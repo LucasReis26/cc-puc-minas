@@ -5,10 +5,10 @@ cmain:
 	gcc -c main.c
 
 cutils:
-	gcc -c myutils.c
+	gcc -c includes/myutils.c
 
 cbubble:
-	gcc -c bubblesort.c
+	gcc -c includes/bubblesort.c
 
 clear:
 	rm *.o

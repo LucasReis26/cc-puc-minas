@@ -1,5 +1,5 @@
-#include "myutils.h"
-#include "bubblesort.h"
+#include "includes/myutils.h"
+#include "includes/bubblesort.h"
 
 int main(){
 

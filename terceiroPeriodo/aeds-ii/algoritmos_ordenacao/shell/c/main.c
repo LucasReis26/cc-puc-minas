@@ -1,4 +1,5 @@
-#include "myutils.h"
+#include "includes/myutils.h"
+#include "includes/shellsort.h"
 
 int main(){
 
@@ -8,17 +9,7 @@ int main(){
 
 	printArray(array,len);
 	
-	int h = 1;
-
-	do{h = (h * 3) + 1;}while(h < len);
-
-	do{
-		h /= 3;
-		for(int cor = 0; cor < h; cor++){
-			insercaoPorCor(array,cor,h, len);
-		}
-	}while(h != 1);
-
+	shellSort(array,len);
 
 	printArray(array,len);
 

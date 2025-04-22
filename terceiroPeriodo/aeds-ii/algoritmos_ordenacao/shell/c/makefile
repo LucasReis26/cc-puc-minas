@@ -1,11 +1,14 @@
-run: cmyutils cmain
-	gcc main.o myutils.o -o exec
+all: cutils cmain cshell
+	gcc main.o shellsort.o myutils.o -o exec
 
 cmain:
-	gcc -c main.c;
+	gcc -c main.c
 
-cmyutils:
-	gcc -c myutils.c;
+cutils:
+	gcc -c includes/myutils.c
+
+cshell:
+	gcc -c includes/shellsort.c
 
 clear:
 	rm -rf *.o;

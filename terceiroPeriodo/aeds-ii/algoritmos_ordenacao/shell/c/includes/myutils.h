@@ -3,6 +3,5 @@
 
 void printArray(int*, int);
 void swap(int*, int*);
-void insercaoPorCor(int*, int, int, int);
 
 #endif

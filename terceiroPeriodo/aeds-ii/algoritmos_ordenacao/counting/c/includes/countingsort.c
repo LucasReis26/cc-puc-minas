@@ -1,11 +1,10 @@
 #include "countingsort.h"
 #include "myutils.h"
-#include <stdlib.h>
 
 void countingSort(int *array, int len){
 	int max = getMax(array,len) + 1;
 
-	int *ordenado = (int *)calloc(len , sizeof(int));
+	int ordenado[len];
 	int counting[max];
 
 	for(int i = 0; i < max;counting[i] = 0, i++);

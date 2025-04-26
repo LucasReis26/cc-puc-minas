@@ -13,7 +13,7 @@ public class Selecao{
 		random.setSeed(4);
 
 		for(int i = 0; i < len; i++){
-			array[i] = random.nextInt();
+			array[i] = Math.abs(random.nextInt() % 100) + 1;
 		}
 
 	}

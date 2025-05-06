@@ -478,6 +478,7 @@ int main(){
 			}
 		}
 	}
+	getchar();
 
 	readLine(entry,255,stdin);
 

@@ -597,10 +597,28 @@ SHOW removerFim(LISTA *lista){
 	for(i = lista->primeiro; i->prox != lista->ultimo; i = i->prox);
 	CELULA *tmp = lista->ultimo;
 	SHOW resp = *tmp->elemento;
-	tmp = NULL;
 	lista->ultimo = i;
 	free(tmp);
-	i = tmp = NULL
+	i = tmp = NULL;
+	return resp;
+}
+
+SHOW remover(LISTA *lista, int pos){
+	SHOW resp;
+	if(lista->primeiro == lista->ultimo){
+		errx(1,"Erro ao remover\n");
+	}
+	int tam = tamanho(lista);
+	if(pos < 0 || pos > tam){
+		errx(1,"Erro ao remover! %d não pode ser removido do tamanho %d\n",pos,tam);
+	}else if(pos == 0){
+		resp = removerInicio(lista);
+	}else if(pos == tam){
+		resp = removerFim(lista);
+	}else{
+		//terminar de codar o remover posição
+	}
+
 	return resp;
 }
 

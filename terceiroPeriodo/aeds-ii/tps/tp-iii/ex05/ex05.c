@@ -559,10 +559,25 @@ void inserirFim(LISTA *lista, SHOW show){
 }
 
 void inserir(LISTA *lista, int pos, SHOW show){
-	CELULA *tmp = new_celula_e(show);
-	if(pos < 0 || pos > lista->tam){
-		errx("Erro ao tentar inserir na posicao %d, tamanho da lista = %d\n",pos,lista->tam);
+	int tam = tamanho(lista);
+	if(pos < 0 || pos > tam){
+		errx(1,"Erro ao tentar inserir na posicao %d, tamanho da lista = %d\n",pos,tam);
+	}else if(pos == 0){
+		inserirInicio(lista,show);
+	}else if(pos == tam){
+		inserirFim(lista, show);
+	}else{
+		int j;
+		CELULA *i = lista->primeiro;
+		for(j = 0; j < pos; j++, i = i->prox);
+		
+		CELULA *tmp = new_celula_e(show);
+		tmp->prox = i->prox;
+		i->prox = tmp;
+		tmp = i = NULL;
+		
 	}
+
 }
 
 int main(){

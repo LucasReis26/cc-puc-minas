@@ -2,6 +2,7 @@
 #include <stdlib.h> 
 #include <string.h>
 #include <stdbool.h>
+#include <err.h>
 
 typedef struct{
 	int date;
@@ -534,6 +535,13 @@ LISTA* new_lista(){
 	return tmp;
 }
 
+int tamanho(LISTA *lista){
+	int tam = 0;
+	CELULA *i;
+	for(i = lista->primeiro; i != lista->ultimo; i = i->prox, tam++);
+	return tam;
+}
+
 void inserirInicio(LISTA *lista, SHOW show){
 	CELULA *tmp = new_celula_e(show);
 	tmp->prox = lista->primeiro;
@@ -548,6 +556,13 @@ void inserirFim(LISTA *lista, SHOW show){
 	lista->ultimo = tmp;
 	tmp = NULL;
 	free(tmp);
+}
+
+void inserir(LISTA *lista, int pos, SHOW show){
+	CELULA *tmp = new_celula_e(show);
+	if(pos < 0 || pos > lista->tam){
+		errx("Erro ao tentar inserir na posicao %d, tamanho da lista = %d\n",pos,lista->tam);
+	}
 }
 
 int main(){

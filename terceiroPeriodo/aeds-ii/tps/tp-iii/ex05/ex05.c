@@ -544,10 +544,9 @@ int tamanho(LISTA *lista){
 
 void inserirInicio(LISTA *lista, SHOW show){
 	CELULA *tmp = new_celula_e(show);
-	tmp->prox = lista->primeiro;
-	lista->primeiro = tmp;
+	tmp->prox = lista->primeiro->prox;
+	lista->primeiro->prox = tmp;
 	tmp = NULL;
-	free(tmp);
 }
 
 void inserirFim(LISTA *lista, SHOW show){
@@ -555,7 +554,6 @@ void inserirFim(LISTA *lista, SHOW show){
 	lista->ultimo->prox = tmp;
 	lista->ultimo = tmp;
 	tmp = NULL;
-	free(tmp);
 }
 
 void inserir(LISTA *lista, int pos, SHOW show){
@@ -575,9 +573,20 @@ void inserir(LISTA *lista, int pos, SHOW show){
 		tmp->prox = i->prox;
 		i->prox = tmp;
 		tmp = i = NULL;
-		
 	}
+}
 
+SHOW removerInicio(LISTA *lista){
+	if(lista->primeiro == lista->ultimo){
+		errx(1,"Erro ao remover");
+	}
+	CELULA *tmp = lista->primeiro->prox;
+	SHOW resp = *lista->primeiro->prox->elemento;
+	lista->primeiro->prox = lista->primeiro->prox->prox;
+	tmp->prox = NULL;
+	free(tmp);
+	tmp = NULL;
+	return resp;
 }
 
 int main(){

@@ -578,7 +578,7 @@ void inserir(LISTA *lista, int pos, SHOW show){
 
 SHOW removerInicio(LISTA *lista){
 	if(lista->primeiro == lista->ultimo){
-		errx(1,"Erro ao remover");
+		errx(1,"Erro ao remover\n");
 	}
 	CELULA *tmp = lista->primeiro->prox;
 	SHOW resp = *lista->primeiro->prox->elemento;
@@ -586,6 +586,21 @@ SHOW removerInicio(LISTA *lista){
 	tmp->prox = NULL;
 	free(tmp);
 	tmp = NULL;
+	return resp;
+}
+
+SHOW removerFim(LISTA *lista){
+	if(lista->primeiro == lista->ultimo){
+		errx(1,"Erro ao remover\n");
+	}
+	CELULA *i;
+	for(i = lista->primeiro; i->prox != lista->ultimo; i = i->prox);
+	CELULA *tmp = lista->ultimo;
+	SHOW resp = *tmp->elemento;
+	tmp = NULL;
+	lista->ultimo = i;
+	free(tmp);
+	i = tmp = NULL
 	return resp;
 }
 

@@ -639,7 +639,7 @@ void preencheListaInicialmente(LISTA*,SHOW*);
 int getShowId();
 int getPosition();
 void executaOperacao(char*, LISTA*, SHOW*);
-
+void quicksort(LISTA*, CELULA*, CELULA*);
 
 int main(){
 	SHOW *shows = (SHOW *)calloc(1368,sizeof(SHOW));
@@ -650,23 +650,7 @@ int main(){
 
 	preencheListaInicialmente(lista_shows,shows);
 	
-	int quantidadeOperacoes;
-
-	scanf("%d",&quantidadeOperacoes);
-	getchar();
-
-	for(int i = 0; i < quantidadeOperacoes; i++){
-		char *op = (char *)malloc(255 * sizeof(char));
-
-		scanf("%s",op);
-		getchar();
-
-		executaOperacao(op,lista_shows,shows);
-
-		free(op);
-	}
-
-	mostrarRestante(lista_shows);
+	quicksort(lista_shows,lista_shows->primeiro->prox, lista_shows->ultimo);
 
 	for(int i = 0; i < 1368; i++)
 		freeShow(shows + i);
@@ -699,7 +683,7 @@ void preencheListaInicialmente(LISTA *lista,SHOW *shows){
 
 	while(strcmp(entry,"FIM") != 0){
 		int id = atoi((entry + 1));
-		inserir(lista,  shows[--id]);
+		inserirFim(lista,  shows[--id]);
 		scanf("%s",entry);
 	}
 }
@@ -724,16 +708,22 @@ int getPosition(){
 	return resp;
 }
 
-void executaOperacao(char *op, LISTA *lista_shows, SHOW *shows){
-	if(strcmp(op,"I") == 0){
-
-		int id = getShowId();
-		inserir(lista_shows,shows[--id]);
-
-	} else if(strcmp(op,"R") == 0){
-
-		SHOW removedShow = remover(lista_shows);
-		printf("(R) %s\n",removedShow.title);
-
-	}
+void quicksort(LISTA *lista, CELULA *esq, CELULA *dir){
+	CELULA *i = esq;
+	CELULA *j = dir;
+	/* TERMINAR IMPLEMENTAÇÃO QUICKSORT */
 }
+
+// void executaOperacao(char *op, LISTA *lista_shows, SHOW *shows){
+// 	if(strcmp(op,"I") == 0){
+//
+// 		int id = getShowId();
+// 		inserir(lista_shows,shows[--id]);
+//
+// 	} else if(strcmp(op,"R") == 0){
+//
+// 		SHOW removedShow = remover(lista_shows);
+// 		printf("(R) %s\n",removedShow.title);
+//
+// 	}
+// }

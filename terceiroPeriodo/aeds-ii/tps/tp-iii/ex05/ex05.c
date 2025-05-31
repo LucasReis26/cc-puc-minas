@@ -654,7 +654,7 @@ int main(){
 
 	while(strcmp(entry,"FIM") != 0){
 		int id = atoi((entry + 1));
-		inserir(lista_shows,  *(shows + (--id)));
+		inserirFim(lista_shows,  *(shows + (--id)));
 		scanf("%s",entry);
 	}
 	
@@ -669,19 +669,52 @@ int main(){
 		scanf("%s",line);
 		getchar();
 
-		if(strcmp(line,"I") == 0){
+		if(strcmp(line,"II") == 0){
+			char *getId = (char *)malloc(255 * sizeof(char));
+			scanf("%s",getId);
+			getchar();
+			int id = atoi(getId + 1);
+			inserirInicio(lista_shows,*(shows + (--id)));
+			free(getId);
+
+		} else if(strcmp(line,"IF") == 0){
 
 			char *getId = (char *)malloc(255 * sizeof(char));
 			scanf("%s",getId);
 			getchar();
 			int id = atoi(getId + 1);
-			inserir(lista_shows,*(shows + (--id)));
+			inserirFim(lista_shows,*(shows + (--id)));
+			free(getId);
 
-		}else if(strcmp(line,"R") == 0){
+		} else if(strcmp(line,"I*") == 0){
 
-			SHOW getShow = remover(lista_shows);
+			int pos;
+			scanf("%d",&pos);
+			getchar();
+			char *getId = (char *)malloc(255 * sizeof(char));
+			scanf("%s",getId);
+			getchar();
+			int id = atoi(getId + 1);
+			inserir(lista_shows,pos,*(shows + (--id)));
+			free(getId);
+
+		}else if(strcmp(line,"RI") == 0){
+
+			SHOW getShow = removerInicio(lista_shows);
 			printf("(R) %s\n",getShow.title);
 
+		}else if(strcmp(line,"RF") == 0){
+
+			SHOW getShow = removerFim(lista_shows);
+			printf("(R) %s\n",getShow.title);
+
+		} else if(strcmp(line,"R*") == 0){
+
+			int pos;
+			scanf("%d",&pos);
+			getchar();
+			SHOW getShow = remover(lista_shows, pos);
+			printf("(R) %s\n",getShow.title);
 		}
 
 		free(line);

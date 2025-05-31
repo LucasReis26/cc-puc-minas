@@ -544,7 +544,7 @@ SHOW remover(PILHA *pilha){
 void mostrarRestante(PILHA *pilha){
 	CELULA *i = pilha->topo->prox;
 	int tam = tamanho(pilha);
-	for(int j = tam; j >= 0; j--, i = i->prox){
+	for(int j = tam - 1; j >= 0; j--, i = i->prox){
 		printf("[%d] ",j);
 		imprimir(i->elemento);
 	}

@@ -104,45 +104,19 @@ char *integerToMonth(int x){
 	char *resp = (char *)malloc(25 * sizeof(char));
 	
 	switch(x){
-		case 1:
-			strcpy(resp,"January");
-			break;
-		case 2:
-			strcpy(resp,"February");
-			break;
-		case 3:
-			strcpy(resp,"March");
-			break;
-		case 4:
-			strcpy(resp,"April");
-			break;
-		case 5:
-			strcpy(resp,"May");
-			break;
-		case 6:
-			strcpy(resp,"June");
-			break;
-		case 7:
-			strcpy(resp,"July");
-			break;
-		case 8:
-			strcpy(resp,"August");
-			break;
-		case 9:
-			strcpy(resp,"September");
-			break;
-		case 10:
-			strcpy(resp,"October");
-			break;
-		case 11:
-			strcpy(resp,"November");
-			break;
-		case 12:
-			strcpy(resp,"December");
-			break;
-		default:
-			printf("ERROR: Mes nao encontrado");
-			break;
+		case 1: strcpy(resp,"January"); break;
+		case 2: strcpy(resp,"February"); break;
+		case 3: strcpy(resp,"March"); break;
+		case 4: strcpy(resp,"April"); break;
+		case 5: strcpy(resp,"May"); break;
+		case 6: strcpy(resp,"June"); break;
+		case 7: strcpy(resp,"July"); break;
+		case 8: strcpy(resp,"August"); break;
+		case 9: strcpy(resp,"September"); break;
+		case 10: strcpy(resp,"October"); break;
+		case 11: strcpy(resp,"November"); break;
+		case 12: strcpy(resp,"December"); break;
+		default: printf("ERROR: Mes nao encontrado"); break;
 	}
 
 	return resp;
@@ -224,9 +198,9 @@ void imprimir(SHOW *a){
 	free(s_cast);
 }
 
-void ler(SHOW *a, char *line){
+char** splitAtributos(char* line){
 	int len = strlen(line);
-	char *atributos[11];
+	char **atributos = (char **)malloc(11 * sizeof(char *));
 	int k = 0;
 	int l = 0;
 	for(int i = 0; i < 11; i++){
@@ -257,13 +231,15 @@ void ler(SHOW *a, char *line){
 					k++;
 				l = 0;
 			}
-			
+
 		}
 	}
+	return atributos;
+}
 
-	// printf("\nDetectado:");
-	// for(int i = 0; i < 11; i++)
-	// 	printf("\n %d - %s",i + 1, atributos[i]);
+void ler(SHOW *a, char *line){
+
+	char **atributos = splitAtributos(line);
 
 	for(int i = 0; i < 11; i++){
 		switch(i){

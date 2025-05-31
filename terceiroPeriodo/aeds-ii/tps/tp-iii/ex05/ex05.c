@@ -641,6 +641,7 @@ void mostrarRestante(LISTA *lista){
 
 void leArquivo(SHOW*);
 void preencheListaInicialmente(LISTA*,SHOW*);
+int getShowId();
 
 int main(){
 	SHOW *shows = (SHOW *)calloc(1368,sizeof(SHOW));
@@ -651,57 +652,46 @@ int main(){
 
 	preencheListaInicialmente(lista_shows,shows);
 	
-	int ops;
+	int quantidadeOperacoes;
 
-	scanf("%d",&ops);
+	scanf("%d",&quantidadeOperacoes);
 	getchar();
 
-	for(int i = 0; i < ops; i++){
-		char *line = (char *)malloc(255 * sizeof(char));
+	for(int i = 0; i < quantidadeOperacoes; i++){
+		char *op = (char *)malloc(255 * sizeof(char));
 
-		scanf("%s",line);
+		scanf("%s",op);
 		getchar();
 
-		if(strcmp(line,"II") == 0){
-			char *getId = (char *)malloc(255 * sizeof(char));
-			scanf("%s",getId);
-			getchar();
-			int id = atoi(getId + 1);
+		if(strcmp(op,"II") == 0){
+
+			int id = getShowId();
 			inserirInicio(lista_shows,*(shows + (--id)));
-			free(getId);
 
-		} else if(strcmp(line,"IF") == 0){
+		} else if(strcmp(op,"IF") == 0){
 
-			char *getId = (char *)malloc(255 * sizeof(char));
-			scanf("%s",getId);
-			getchar();
-			int id = atoi(getId + 1);
+			int id = getShowId();
 			inserirFim(lista_shows,*(shows + (--id)));
-			free(getId);
 
-		} else if(strcmp(line,"I*") == 0){
+		} else if(strcmp(op,"I*") == 0){
 
 			int pos;
 			scanf("%d",&pos);
 			getchar();
-			char *getId = (char *)malloc(255 * sizeof(char));
-			scanf("%s",getId);
-			getchar();
-			int id = atoi(getId + 1);
+			int id = getShowId();
 			inserir(lista_shows,pos,*(shows + (--id)));
-			free(getId);
 
-		}else if(strcmp(line,"RI") == 0){
+		}else if(strcmp(op,"RI") == 0){
 
 			SHOW getShow = removerInicio(lista_shows);
 			printf("(R) %s\n",getShow.title);
 
-		}else if(strcmp(line,"RF") == 0){
+		}else if(strcmp(op,"RF") == 0){
 
 			SHOW getShow = removerFim(lista_shows);
 			printf("(R) %s\n",getShow.title);
 
-		} else if(strcmp(line,"R*") == 0){
+		} else if(strcmp(op,"R*") == 0){
 
 			int pos;
 			scanf("%d",&pos);
@@ -710,7 +700,7 @@ int main(){
 			printf("(R) %s\n",getShow.title);
 		}
 
-		free(line);
+		free(op);
 	}
 
 	mostrarRestante(lista_shows);
@@ -739,6 +729,7 @@ void leArquivo(SHOW *shows){
 	free(line);
 	fclose(file);
 }
+
 void preencheListaInicialmente(LISTA *lista,SHOW *shows){
 	char *entry = (char *)malloc(255 * sizeof(char));
 	scanf("%s",entry);
@@ -748,4 +739,17 @@ void preencheListaInicialmente(LISTA *lista,SHOW *shows){
 		inserirFim(lista,  *(shows + (--id)));
 		scanf("%s",entry);
 	}
+}
+
+int getShowId(){
+	char *id = (char *)malloc(255 * sizeof(char));
+
+	scanf("%s",id);
+	getchar();
+
+	int resp = atoi(id + 1);
+
+	free(id);
+
+	return resp;
 }

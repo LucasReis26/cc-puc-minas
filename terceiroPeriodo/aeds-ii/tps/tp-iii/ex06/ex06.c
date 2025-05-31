@@ -641,36 +641,15 @@ int getPosition(){
 }
 
 void executaOperacao(char *op, PILHA *pilha_shows, SHOW *shows){
-	if(strcmp(op,"II") == 0){
+	if(strcmp(op,"I") == 0){
 
 		int id = getShowId();
-		inserirInicio(pilha_shows,shows[--id]);
+		inserir(pilha_shows,shows[--id]);
 
-	} else if(strcmp(op,"IF") == 0){
+	} else if(strcmp(op,"R") == 0){
 
-		int id = getShowId();
-		inserirFim(pilha_shows,shows[--id]);
+		SHOW removedShow = remover(pilha_shows);
+		printf("(R) %s\n",removedShow.title);
 
-	} else if(strcmp(op,"I*") == 0){
-
-		int pos = getPosition();
-		int id = getShowId();
-		inserir(pilha_shows,pos,shows[--id]);
-
-	}else if(strcmp(op,"RI") == 0){
-
-		SHOW getShow = removerInicio(pilha_shows);
-		printf("(R) %s\n",getShow.title);
-
-	}else if(strcmp(op,"RF") == 0){
-
-		SHOW getShow = removerFim(pilha_shows);
-		printf("(R) %s\n",getShow.title);
-
-	} else if(strcmp(op,"R*") == 0){
-
-		int pos = getPosition();
-		SHOW getShow = remover(pilha_shows, pos);
-		printf("(R) %s\n",getShow.title);
 	}
 }

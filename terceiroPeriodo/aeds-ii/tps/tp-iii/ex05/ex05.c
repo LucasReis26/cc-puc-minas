@@ -441,6 +441,10 @@ void ler(SHOW *a, char *line){
 		}
 	}
 
+	for(int i = 0; i < 11; i++){
+		free(atributos[i]);
+	}
+	free(atributos);
 }
 
 void readLine(char *line,int maxsize, FILE *file){

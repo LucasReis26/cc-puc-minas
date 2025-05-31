@@ -616,7 +616,15 @@ SHOW remover(LISTA *lista, int pos){
 	}else if(pos == tam){
 		resp = removerFim(lista);
 	}else{
-		//terminar de codar o remover posição
+		CELULA *tmp;
+		CELULA *i = lista->primeiro->prox;
+		for(int j = 0; j < pos - 1; j++, i = i->prox);
+		tmp = i->prox;
+		i->prox = i->prox->prox;
+		resp = *tmp->elemento;
+		tmp->prox = NULL;
+		free(tmp);
+		i = tmp = NULL;
 	}
 
 	return resp;

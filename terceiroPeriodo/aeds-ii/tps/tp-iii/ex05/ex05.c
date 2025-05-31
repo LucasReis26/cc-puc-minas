@@ -237,92 +237,89 @@ char** splitAtributos(char* line){
 	return atributos;
 }
 
+void setShowId(SHOW *a,char *atributo){
+	size_t len = strlen(atributo);
+	a->show_id =(char *)malloc((len + 1) * sizeof(char));
+	strcpy(a->show_id,atributo);
+}
+
+void setType(SHOW *a,char *atributo){
+	size_t len = strlen(atributo);
+	a->type =(char *)malloc((len + 1)* sizeof(char));
+	strcpy(a->type,atributo);
+}
+
+void setTitle(SHOW *a,char *atributo){
+	size_t len = strlen(atributo);
+	a->title =(char *)calloc((len + 1) , sizeof(char));
+	strcpy(a->title,atributo);
+}
+
+void setDirector(SHOW *a,char *atributo){
+	size_t len = strlen(atributo);
+	a->director =(char *)malloc((len + 1) * sizeof(char));
+	strcpy(a->director,atributo);
+}
+
+void setCast(SHOW *a, char *atributo){
+	if(strcmp(atributo,"NaN") != 0 || strlen(atributo) != 0){
+		int quantidade = 1;
+		int len = strlen(atributo);
+
+		for(int j = 0; j < len; j++)
+			if(atributo[j] == ',')
+				quantidade++;
+
+		a->castLen = quantidade;
+
+		a->cast = (char **)calloc(quantidade , sizeof(char*));
+		for(int j = 0; j < quantidade;j++){
+			*(a->cast + j) = (char *)calloc(len , sizeof(char));
+		}
+
+		for(int j = 0,k = 0,l = 0; j < len; j++){
+			if(atributo[j] != ','){
+				a->cast[k][l++] = atributo[j];
+			}else if(atributo[j] == ','){
+				a->cast[k++][l] = '\0';
+				l = 0;
+				if(atributo[j + 1] == ' '){
+					j++;
+				}
+			}
+		}
+
+		size_t s_len = a->castLen;
+		for(int j = 0; j < s_len - 1; j++){
+			int menor = j;
+			for(int k = j + 1; k < s_len; k++){
+				if(strcmp(a->cast[k],a->cast[menor]) < 0){
+					menor = k;
+				}
+			}
+			char *aux = a->cast[j];
+			a->cast[j] = a->cast[menor];
+			a->cast[menor] = aux;
+		}
+
+	}else{
+		a->castLen = 0;
+		a->cast = NULL;
+	}
+}
+
 void ler(SHOW *a, char *line){
 
 	char **atributos = splitAtributos(line);
 
+	setShowId(a, atributos[0]);
+	setType(a, atributos[1]);
+	setTitle(a, atributos[2]);
+	setDirector(a,atributos[3]);
+	setCast(a,atributos[4]);
+	
 	for(int i = 0; i < 11; i++){
 		switch(i){
-			case 0:
-				{
-					size_t len = strlen(atributos[i]);
-					a->show_id =(char *)malloc((len + 1) * sizeof(char));
-					strcpy(a->show_id,atributos[i]);
-					// printf("\n%s\n",a->show_id);
-					break;
-				}
-			case 1:
-				{
-					size_t len = strlen(atributos[i]);
-					a->type =(char *)malloc((len + 1)* sizeof(char));
-					strcpy(a->type,atributos[i]);
-					break;
-				}
-			case 2:
-				{
-					size_t len = strlen(atributos[i]);
-					a->title =(char *)calloc((len + 1) , sizeof(char));
-					strcpy(a->title,atributos[i]);
-					break;
-				}
-			case 3:
-				{
-					size_t len = strlen(atributos[i]);
-					a->director =(char *)malloc((len + 1) * sizeof(char));
-					strcpy(a->director,atributos[i]);
-					break;
-				}
-			case 4:
-				{
-					// printf("\n%s, %s\n",a->show_id, atributos[i]);
-					// printf("\n%ld\n",strlen(atributos[i]));
-					if(strcmp(atributos[i],"NaN") != 0 || strlen(atributos[i]) != 0){
-						int quantidade = 1;
-						int len = strlen(atributos[i]);
-
-						for(int j = 0; j < len; j++)
-							if(atributos[i][j] == ',')
-								quantidade++;
-
-						a->castLen = quantidade;
-
-						a->cast = (char **)calloc(quantidade , sizeof(char*));
-						for(int j = 0; j < quantidade;j++){
-							*(a->cast + j) = (char *)calloc(len , sizeof(char));
-						}
-
-						for(int j = 0,k = 0,l = 0; j < len; j++){
-							if(atributos[i][j] != ','){
-								a->cast[k][l++] = atributos[i][j];
-							}else if(atributos[i][j] == ','){
-								a->cast[k++][l] = '\0';
-								l = 0;
-								if(atributos[i][j + 1] == ' '){
-									j++;
-								}
-							}
-						}
-
-						size_t s_len = a->castLen;
-						for(int j = 0; j < s_len - 1; j++){
-							int menor = j;
-							for(int k = j + 1; k < s_len; k++){
-								if(strcmp(a->cast[k],a->cast[menor]) < 0){
-									menor = k;
-								}
-							}
-							char *aux = a->cast[j];
-							a->cast[j] = a->cast[menor];
-							a->cast[menor] = aux;
-						}
-
-					}else{
-						a->castLen = 0;
-						a->cast = NULL;
-					}
-
-					break;
-				}
 			case 5:
 				{
 					size_t len = strlen(atributos[i]);

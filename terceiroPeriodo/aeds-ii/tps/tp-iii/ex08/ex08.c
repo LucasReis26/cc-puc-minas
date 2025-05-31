@@ -483,74 +483,77 @@ void freeShow(SHOW *i){
 typedef struct CELULA{
 	SHOW *elemento;
 	struct CELULA *prox;
+	struct CELULA *ant;
 }CELULA;
 
 CELULA* new_celula(){
 	CELULA *tmp = (CELULA *)malloc(sizeof(CELULA));
-	tmp->elemento = (SHOW *)malloc(sizeof(SHOW));
+	tmp->elemento = (SHOW *)calloc(1, sizeof(SHOW));
 	tmp->prox = NULL;
+	tmp->ant = NULL;
 	return tmp;
 }
 
 CELULA* new_celula_e(SHOW show){
 	CELULA *tmp = (CELULA *)malloc(sizeof(CELULA));
-	tmp->elemento = (SHOW *)malloc(sizeof(SHOW));
+	tmp->elemento = (SHOW *)calloc(1,sizeof(SHOW));
 	*(tmp->elemento) = clone(show);
 	tmp->prox = NULL;
+	tmp->ant = NULL;
 	return tmp;
 }
 
 typedef struct{
 	CELULA *primeiro;
 	CELULA *ultimo;
-}FILA;
+}LISTA;
 
-FILA* new_fila(){
-	FILA *tmp = (FILA *)malloc(sizeof(FILA));
+LISTA* new_lista(){
+	LISTA *tmp = (LISTA *)malloc(sizeof(LISTA));
 	tmp->primeiro = new_celula();
 	tmp->ultimo = tmp->primeiro;
 	return tmp;
 }
 
-int tamanho(FILA *fila){
+int tamanho(LISTA *lista){
 	int tam = 0;
 	CELULA *i;
-	for(i = fila->primeiro; i != fila->ultimo; i = i->prox, tam++);
+	for(i = lista->primeiro; i != lista->ultimo; i = i->prox, tam++);
 	return tam;
 }
 
-SHOW remover(FILA*);
-int mediaFila(FILA*);
+SHOW remover(LISTA*);
+int mediaLista(LISTA*);
 
-void inserir(FILA *fila, SHOW show){
-	int tam = tamanho(fila);
-	if(tam == 5){
-		remover(fila);
-		CELULA *tmp = new_celula_e(show);
-		fila->ultimo->prox = tmp;
-		fila->ultimo = tmp;
-		fila->ultimo->prox = fila->primeiro->prox;
-		tmp = NULL;
-	}else{
-		CELULA *tmp = new_celula_e(show);
-		fila->ultimo->prox = tmp;
-		fila->ultimo = tmp;
-		fila->ultimo->prox = fila->primeiro->prox;
-		tmp = NULL;
-	}
-	printf("[Media] %d\n",mediaFila(fila));
+void inserirInicio(LISTA *lista, SHOW show){
+	CELULA *tmp = new_celula_e(show);
+	tmp->prox = lista->primeiro->prox;
+	lista->primeiro->prox->ant = tmp;
+	lista->primeiro->prox = tmp;
+	tmp = NULL;
 }
 
+void inserirFim(LISTA *lista, SHOW show){
+	CELULA *tmp = new_celula_e(show);
+	lista->ultimo->prox = tmp;
+	tmp->ant = lista->ultimo;
+	lista->ultimo = tmp;
+	tmp = NULL;
+}
 
-SHOW remover(FILA *fila){
+void inserir(LISTA *lista, int pos, SHOW show){
+
+}
+
+SHOW remover(LISTA *lista){
 	SHOW resp;
 
-	if(fila->primeiro == fila->ultimo){
+	if(lista->primeiro == lista->ultimo){
 		errx(1,"Erro ao remover\n");
 	}else{
-		CELULA *tmp = fila->primeiro->prox;
-		fila->primeiro->prox = fila->primeiro->prox->prox;
-		fila->ultimo->prox = fila->primeiro->prox->prox;
+		CELULA *tmp = lista->primeiro->prox;
+		lista->primeiro->prox = lista->primeiro->prox->prox;
+		lista->ultimo->prox = lista->primeiro->prox->prox;
 		tmp->prox = NULL;
 		resp = clone(*(tmp->elemento));
 		free(tmp);
@@ -559,20 +562,20 @@ SHOW remover(FILA *fila){
 	return resp;
 }
 
-int mediaFila(FILA *fila){
+int mediaLista(LISTA *lista){
 	int resp = 0;
-	int tam = tamanho(fila);
+	int tam = tamanho(lista);
 
-	CELULA *i = fila->primeiro->prox;
+	CELULA *i = lista->primeiro->prox;
 
 	for(int j = tam; j > 0;j--, resp += i->elemento->release_year, i = i->prox );
 
 	return resp / tam;
 }
 
-void mostrarRestante(FILA *fila){
-	CELULA *i = fila->primeiro->prox;
-	int tam = tamanho(fila);
+void mostrarRestante(LISTA *lista){
+	CELULA *i = lista->primeiro->prox;
+	int tam = tamanho(lista);
 	for(int j = tam - 1; j >= 0; j--, i = i->prox){
 		printf("[%d] ",j);
 		imprimir(i->elemento);
@@ -580,10 +583,10 @@ void mostrarRestante(FILA *fila){
 }
 
 void leArquivo(SHOW*);
-void preencheFilaInicialmente(FILA*,SHOW*);
+void preencheListaInicialmente(LISTA*,SHOW*);
 int getShowId();
 int getPosition();
-void executaOperacao(char*, FILA*, SHOW*);
+void executaOperacao(char*, LISTA*, SHOW*);
 
 
 int main(){
@@ -591,9 +594,9 @@ int main(){
 
 	leArquivo(shows);
 	
-	FILA *fila_shows = new_fila();
+	LISTA *lista_shows = new_lista();
 
-	preencheFilaInicialmente(fila_shows,shows);
+	preencheListaInicialmente(lista_shows,shows);
 	
 	int quantidadeOperacoes;
 
@@ -606,12 +609,12 @@ int main(){
 		scanf("%s",op);
 		getchar();
 
-		executaOperacao(op,fila_shows,shows);
+		executaOperacao(op,lista_shows,shows);
 
 		free(op);
 	}
 
-	mostrarRestante(fila_shows);
+	mostrarRestante(lista_shows);
 
 	for(int i = 0; i < 1368; i++)
 		freeShow(shows + i);
@@ -638,13 +641,13 @@ void leArquivo(SHOW *shows){
 	fclose(file);
 }
 
-void preencheFilaInicialmente(FILA *fila,SHOW *shows){
+void preencheListaInicialmente(LISTA *lista,SHOW *shows){
 	char *entry = (char *)malloc(255 * sizeof(char));
 	scanf("%s",entry);
 
 	while(strcmp(entry,"FIM") != 0){
 		int id = atoi((entry + 1));
-		inserir(fila,  shows[--id]);
+		inserir(lista,  shows[--id]);
 		scanf("%s",entry);
 	}
 }
@@ -669,15 +672,15 @@ int getPosition(){
 	return resp;
 }
 
-void executaOperacao(char *op, FILA *fila_shows, SHOW *shows){
+void executaOperacao(char *op, LISTA *lista_shows, SHOW *shows){
 	if(strcmp(op,"I") == 0){
 
 		int id = getShowId();
-		inserir(fila_shows,shows[--id]);
+		inserir(lista_shows,shows[--id]);
 
 	} else if(strcmp(op,"R") == 0){
 
-		SHOW removedShow = remover(fila_shows);
+		SHOW removedShow = remover(lista_shows);
 		printf("(R) %s\n",removedShow.title);
 
 	}

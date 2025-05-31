@@ -522,7 +522,7 @@ int tamanho(LISTA *lista){
 	return tam;
 }
 
-SHOW remover(LISTA*);
+SHOW remover(LISTA*,int);
 int mediaLista(LISTA*);
 
 void inserirInicio(LISTA *lista, SHOW show){
@@ -589,16 +589,24 @@ SHOW removerFim(LISTA *lista){
 }
 
 
-SHOW remover(LISTA *lista){
+SHOW remover(LISTA *lista,int pos){
 	SHOW resp;
 
-	if(lista->primeiro == lista->ultimo){
-		errx(1,"Erro ao remover\n");
-	}else{
-		CELULA *tmp = lista->primeiro->prox;
-		lista->primeiro->prox = lista->primeiro->prox->prox;
-		lista->ultimo->prox = lista->primeiro->prox->prox;
-		tmp->prox = NULL;
+	int tam = tamanho(lista);
+	if(pos < 0 || pos > tam)
+		errx(1,"Erro! index fora de posição");
+	else if(pos == 0)
+		resp = removerInicio(lista);
+	else if(pos == tam)
+		resp = removerFim(lista);
+	else{
+		CELULA *i = lista->primeiro;
+		int j;
+		for(j = 0; j < pos; j++, i = i->prox);
+		CELULA *tmp = i;
+		tmp->ant->prox = tmp->prox;
+		tmp->prox->ant = tmp->ant;
+		tmp->prox = tmp->ant = i = NULL;
 		resp = clone(*(tmp->elemento));
 		free(tmp);
 	}

@@ -643,6 +643,7 @@ void leArquivo(SHOW*);
 void preencheListaInicialmente(LISTA*,SHOW*);
 int getShowId();
 int getPosition();
+void executaOperacao(char*, LISTA*, SHOW*);
 
 
 int main(){
@@ -665,40 +666,7 @@ int main(){
 		scanf("%s",op);
 		getchar();
 
-		if(strcmp(op,"II") == 0){
-
-			int id = getShowId();
-			inserirInicio(lista_shows,shows[--id]);
-
-		} else if(strcmp(op,"IF") == 0){
-
-			int id = getShowId();
-			inserirFim(lista_shows,shows[--id]);
-
-		} else if(strcmp(op,"I*") == 0){
-
-			int pos = getPosition();
-			int id = getShowId();
-			inserir(lista_shows,pos,shows[--id]);
-
-		}else if(strcmp(op,"RI") == 0){
-
-			SHOW getShow = removerInicio(lista_shows);
-			printf("(R) %s\n",getShow.title);
-
-		}else if(strcmp(op,"RF") == 0){
-
-			SHOW getShow = removerFim(lista_shows);
-			printf("(R) %s\n",getShow.title);
-
-		} else if(strcmp(op,"R*") == 0){
-
-			int pos;
-			scanf("%d",&pos);
-			getchar();
-			SHOW getShow = remover(lista_shows, pos);
-			printf("(R) %s\n",getShow.title);
-		}
+		executaOperacao(op,lista_shows,shows);
 
 		free(op);
 	}
@@ -759,4 +727,39 @@ int getPosition(){
 	scanf("%d",&resp);
 	getchar();
 	return resp;
+}
+
+void executaOperacao(char *op, LISTA *lista_shows, SHOW *shows){
+	if(strcmp(op,"II") == 0){
+
+		int id = getShowId();
+		inserirInicio(lista_shows,shows[--id]);
+
+	} else if(strcmp(op,"IF") == 0){
+
+		int id = getShowId();
+		inserirFim(lista_shows,shows[--id]);
+
+	} else if(strcmp(op,"I*") == 0){
+
+		int pos = getPosition();
+		int id = getShowId();
+		inserir(lista_shows,pos,shows[--id]);
+
+	}else if(strcmp(op,"RI") == 0){
+
+		SHOW getShow = removerInicio(lista_shows);
+		printf("(R) %s\n",getShow.title);
+
+	}else if(strcmp(op,"RF") == 0){
+
+		SHOW getShow = removerFim(lista_shows);
+		printf("(R) %s\n",getShow.title);
+
+	} else if(strcmp(op,"R*") == 0){
+
+		int pos = getPosition();
+		SHOW getShow = remover(lista_shows, pos);
+		printf("(R) %s\n",getShow.title);
+	}
 }

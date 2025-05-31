@@ -567,7 +567,7 @@ void inserir(LISTA *lista, int pos, SHOW show){
 		inserirFim(lista, show);
 	}else{
 		int j;
-		CELULA *i = lista->primeiro->prox;
+		CELULA *i = lista->primeiro;
 		for(j = 0; j < pos; j++, i = i->prox);
 		
 		CELULA *tmp = new_celula_e(show);
@@ -582,7 +582,7 @@ SHOW removerInicio(LISTA *lista){
 		errx(1,"Erro ao remover\n");
 	}
 	CELULA *tmp = lista->primeiro->prox;
-	SHOW resp = *lista->primeiro->prox->elemento;
+	SHOW resp = clone(*lista->primeiro->prox->elemento);
 	lista->primeiro->prox = lista->primeiro->prox->prox;
 	tmp->prox = NULL;
 	free(tmp);
@@ -597,8 +597,9 @@ SHOW removerFim(LISTA *lista){
 	CELULA *i;
 	for(i = lista->primeiro; i->prox != lista->ultimo; i = i->prox);
 	CELULA *tmp = lista->ultimo;
-	SHOW resp = *tmp->elemento;
+	SHOW resp = clone(*tmp->elemento);
 	lista->ultimo = i;
+	i->prox = NULL;
 	free(tmp);
 	i = tmp = NULL;
 	return resp;
@@ -622,7 +623,7 @@ SHOW remover(LISTA *lista, int pos){
 		for(int j = 0; j < pos - 1; j++, i = i->prox);
 		tmp = i->prox;
 		i->prox = i->prox->prox;
-		resp = *tmp->elemento;
+		resp = clone(*tmp->elemento);
 		tmp->prox = NULL;
 		free(tmp);
 		i = tmp = NULL;

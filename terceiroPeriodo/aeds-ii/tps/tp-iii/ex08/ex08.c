@@ -542,7 +542,22 @@ void inserirFim(LISTA *lista, SHOW show){
 }
 
 void inserir(LISTA *lista, int pos, SHOW show){
-
+	int tam = tamanho(lista);
+	if(pos < 0 || pos > tam){
+		errx(1,"Erro! posição inválida\n");
+	}else if(pos == 0){
+		inserirInicio(lista,show);
+	}else if(pos == tam){
+		inserirFim(lista,show);
+	}else{
+		CELULA *tmp = new_celula_e(show);
+		CELULA *i = lista->primeiro->prox;
+		for(int j = 0; j < pos; j++, i = i->prox);
+		tmp->prox = i->prox;
+		i->prox->ant = tmp;
+		i->prox = tmp;
+		tmp = i = NULL;
+	}
 }
 
 SHOW remover(LISTA *lista){

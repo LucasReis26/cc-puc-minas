@@ -513,7 +513,7 @@ PILHA* new_pilha(){
 int tamanho(PILHA *pilha){
 	int tam = 0;
 	CELULA *i;
-	for(i = pilha->topo; i != NULL; i = i->prox, tam++);
+	for(i = pilha->topo->prox; i != NULL; i = i->prox, tam++);
 	return tam;
 }
 
@@ -527,6 +527,7 @@ void inserir(PILHA *pilha, SHOW show){
 
 SHOW remover(PILHA *pilha){
 	SHOW resp;
+
 	if(pilha->topo->prox == NULL){
 		errx(1,"Erro ao remover\n");
 	}else{
@@ -541,8 +542,10 @@ SHOW remover(PILHA *pilha){
 }
 
 void mostrarRestante(PILHA *pilha){
-	CELULA *i;
-	for(i = pilha->primeiro->prox;i != NULL; i = i->prox){
+	CELULA *i = pilha->topo->prox;
+	int tam = tamanho(pilha);
+	for(int j = tam; j >= 0; j--, i = i->prox){
+		printf("[%d] ",j);
 		imprimir(i->elemento);
 	}
 }

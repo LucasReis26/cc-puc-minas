@@ -566,7 +566,7 @@ void inserir(LISTA *lista, int pos, SHOW show){
 		inserirFim(lista, show);
 	}else{
 		int j;
-		CELULA *i = lista->primeiro;
+		CELULA *i = lista->primeiro->prox;
 		for(j = 0; j < pos; j++, i = i->prox);
 		
 		CELULA *tmp = new_celula_e(show);

@@ -630,6 +630,13 @@ SHOW remover(LISTA *lista, int pos){
 	return resp;
 }
 
+void mostrarRestante(LISTA *lista){
+	CELULA *i;
+	for(i = lista->primeiro->prox;i != NULL; i = i->prox){
+		imprimir(i->elemento);
+	}
+}
+
 int main(){
 	SHOW *shows = (SHOW *)calloc(1368,sizeof(SHOW));
 

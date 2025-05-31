@@ -560,6 +560,17 @@ void inserir(LISTA *lista, int pos, SHOW show){
 	}
 }
 
+SHOW removerInicio(LISTA *lista){
+	SHOW resp;
+	CELULA *tmp = lista->primeiro->prox;
+	lista->primeiro->prox = tmp->prox;
+	tmp->prox = NULL;
+	resp = clone(*(tmp->elemento));
+	free(tmp);
+	return resp;
+}
+
+
 SHOW remover(LISTA *lista){
 	SHOW resp;
 

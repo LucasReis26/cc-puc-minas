@@ -642,6 +642,8 @@ void mostrarRestante(LISTA *lista){
 void leArquivo(SHOW*);
 void preencheListaInicialmente(LISTA*,SHOW*);
 int getShowId();
+int getPosition();
+
 
 int main(){
 	SHOW *shows = (SHOW *)calloc(1368,sizeof(SHOW));
@@ -666,20 +668,18 @@ int main(){
 		if(strcmp(op,"II") == 0){
 
 			int id = getShowId();
-			inserirInicio(lista_shows,*(shows + (--id)));
+			inserirInicio(lista_shows,shows[--id]);
 
 		} else if(strcmp(op,"IF") == 0){
 
 			int id = getShowId();
-			inserirFim(lista_shows,*(shows + (--id)));
+			inserirFim(lista_shows,shows[--id]);
 
 		} else if(strcmp(op,"I*") == 0){
 
-			int pos;
-			scanf("%d",&pos);
-			getchar();
+			int pos = getPosition();
 			int id = getShowId();
-			inserir(lista_shows,pos,*(shows + (--id)));
+			inserir(lista_shows,pos,shows[--id]);
 
 		}else if(strcmp(op,"RI") == 0){
 
@@ -751,5 +751,12 @@ int getShowId(){
 
 	free(id);
 
+	return resp;
+}
+
+int getPosition(){
+	int resp;
+	scanf("%d",&resp);
+	getchar();
 	return resp;
 }

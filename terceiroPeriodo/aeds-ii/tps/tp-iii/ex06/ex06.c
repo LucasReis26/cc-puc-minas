@@ -501,30 +501,31 @@ CELULA* new_celula_e(SHOW show){
 }
 
 typedef struct{
-	CELULA *primeiro;
-	CELULA *ultimo;
+	CELULA *topo;
 }PILHA;
 
 PILHA* new_pilha(){
 	PILHA *tmp = (PILHA *)malloc(sizeof(PILHA));
-	tmp->primeiro = new_celula();
-	tmp->ultimo = tmp->primeiro;
+	tmp->topo = new_celula();
 	return tmp;
 }
 
 int tamanho(PILHA *pilha){
 	int tam = 0;
 	CELULA *i;
-	for(i = pilha->primeiro; i != pilha->ultimo; i = i->prox, tam++);
+	for(i = pilha->topo; i != NULL; i = i->prox, tam++);
 	return tam;
 }
 
-void inserir(PILHA *pilha, int pos, SHOW show){
-
+void inserir(PILHA *pilha, SHOW show){
+	CELULA *tmp = new_celula_e(show);
+	tmp->prox = pilha->topo->prox;
+	pilha->topo->prox = tmp;
+	tmp = NULL;
 }
 
 
-SHOW remover(PILHA *pilha, int pos){
+SHOW remover(PILHA *pilha){
 
 }
 

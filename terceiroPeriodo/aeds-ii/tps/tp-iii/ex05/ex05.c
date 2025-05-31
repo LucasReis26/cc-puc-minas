@@ -308,6 +308,119 @@ void setCast(SHOW *a, char *atributo){
 	}
 }
 
+void setCountry(SHOW *a, char *atributo){
+	size_t len = strlen(atributo);
+	a->country =(char *)malloc((len + 1) * sizeof(char));
+	strcpy(a->country,atributo);
+}
+
+void setDate(SHOW *a, char *atributo){
+	if(strcmp(atributo,"NaN") != 0){
+		int len = strlen(atributo);
+		char c_month[len];
+		char c_date[len];
+		char c_year[len];
+
+		int k;
+		for(int j = 0; j < len; j++){
+			if(atributo[j] != ' '){
+				c_month[j] = atributo[j];
+			}else{
+				c_month[j] = '\0';
+				k = j + 1;
+				j = len;
+			}
+		}
+		for(int j = k,l = 0; j < len; j++){
+			if(atributo[j] != ','){
+				c_date[l++] = atributo[j];
+			}else{
+				c_date[l] = '\0';
+				k = j + 2;
+				j = len;
+			}
+		}
+		for(int j = k,l = 0; j < len; j++){
+			c_year[l++] = atributo[j];
+			if(j == len - 1)
+				c_year[l] = '\0';
+		}
+
+		a->date_added.month = monthToInteger(c_month);
+		a->date_added.date = atoi(c_date);
+		a->date_added.year = atoi(c_year);
+	}else{
+		a->date_added.month = 3;
+		a->date_added.date = 1;
+		a->date_added.year = 1900;
+	}
+}
+
+void setReleaseYear(SHOW *a, char *atributo){
+	a->release_year = atoi(atributo);
+}
+
+void setRating(SHOW *a, char *atributo){
+	size_t len = strlen(atributo);
+	a->rating =(char *)malloc((len + 1) * sizeof(char));
+	strcpy(a->rating,atributo);
+
+}
+
+void setDuration(SHOW *a, char *atributo){
+
+	size_t len = strlen(atributo);
+	a->duration =(char *)malloc((len + 1) * sizeof(char));
+	strcpy(a->duration,atributo);
+}
+
+void setListedIn(SHOW *a, char *atributo){
+	if(strcmp(atributo,"NaN") != 0){
+		int quantidade = 1;
+		int len = strlen(atributo);
+
+		for(int j = 0; j < len; j++)
+			if(atributo[j] == ',')
+				quantidade++;
+
+		a->listedLen = quantidade;
+
+		a->listed_in = (char **)malloc(quantidade * sizeof(char*));
+		for(int j = 0; j < quantidade;j++){
+			*(a->listed_in + j) = (char *)malloc(len * sizeof(char));
+		}
+
+		for(int j = 0,k = 0,l = 0; j < len; j++){
+			if(atributo[j] != ','){
+				a->listed_in[k][l++] = atributo[j];
+			}else if(atributo[j] == ','){
+				a->listed_in[k++][l] = '\0';
+				l = 0;
+				if(atributo[j + 1] == ' '){
+					j++;
+				}
+			}
+		}
+
+		size_t s_len = a->listedLen;
+		for(int j = 0; j < s_len - 1; j++){
+			int menor = j;
+			for(int k = j + 1; k < s_len; k++){
+				if(strcmp(a->listed_in[k],a->listed_in[menor]) < 0){
+					menor = k;
+				}
+			}
+			char *aux = a->listed_in[j];
+			a->listed_in[j] = a->listed_in[menor];
+			a->listed_in[menor] = aux;
+		}
+
+	}else{
+		a->listedLen = 0;
+		a->listed_in = NULL;
+	}
+}
+
 void ler(SHOW *a, char *line){
 
 	char **atributos = splitAtributos(line);
@@ -317,127 +430,13 @@ void ler(SHOW *a, char *line){
 	setTitle(a, atributos[2]);
 	setDirector(a,atributos[3]);
 	setCast(a,atributos[4]);
+	setCountry(a,atributos[5]);
+	setDate(a, atributos[6]);
+	setReleaseYear(a, atributos[7]);
+	setRating(a,atributos[8]);
+	setDuration(a,atributos[9]);
+	setListedIn(a, atributos[10]);
 	
-	for(int i = 0; i < 11; i++){
-		switch(i){
-			case 5:
-				{
-					size_t len = strlen(atributos[i]);
-					a->country =(char *)malloc((len + 1) * sizeof(char));
-					strcpy(a->country,atributos[i]);
-					break;
-				}
-			case 6:
-				{
-					if(strcmp(atributos[i],"NaN") != 0){
-						int len = strlen(atributos[i]);
-						char c_month[len];
-						char c_date[len];
-						char c_year[len];
-
-						int k;
-						for(int j = 0; j < len; j++){
-							if(atributos[i][j] != ' '){
-								c_month[j] = atributos[i][j];
-							}else{
-								c_month[j] = '\0';
-								k = j + 1;
-								j = len;
-							}
-						}
-						for(int j = k,l = 0; j < len; j++){
-							if(atributos[i][j] != ','){
-								c_date[l++] = atributos[i][j];
-							}else{
-								c_date[l] = '\0';
-								k = j + 2;
-								j = len;
-							}
-						}
-						for(int j = k,l = 0; j < len; j++){
-							c_year[l++] = atributos[i][j];
-							if(j == len - 1)
-								c_year[l] = '\0';
-						}
-
-						a->date_added.month = monthToInteger(c_month);
-						a->date_added.date = atoi(c_date);
-						a->date_added.year = atoi(c_year);
-					}else{
-						a->date_added.month = 3;
-						a->date_added.date = 1;
-						a->date_added.year = 1900;
-					}
-					break;
-				}
-			case 7:
-				a->release_year = atoi(atributos[i]);
-				break;
-			case 8:
-				{
-					size_t len = strlen(atributos[i]);
-					a->rating =(char *)malloc((len + 1) * sizeof(char));
-					strcpy(a->rating,atributos[i]);
-					break;
-				}
-			case 9:
-				{
-					size_t len = strlen(atributos[i]);
-					a->duration =(char *)malloc((len + 1) * sizeof(char));
-					strcpy(a->duration,atributos[i]);
-					break;
-				}
-			case 10:
-				{
-					if(strcmp(atributos[i],"NaN") != 0){
-						int quantidade = 1;
-						int len = strlen(atributos[i]);
-
-						for(int j = 0; j < len; j++)
-							if(atributos[i][j] == ',')
-								quantidade++;
-
-						a->listedLen = quantidade;
-
-						a->listed_in = (char **)malloc(quantidade * sizeof(char*));
-						for(int j = 0; j < quantidade;j++){
-							*(a->listed_in + j) = (char *)malloc(len * sizeof(char));
-						}
-
-						for(int j = 0,k = 0,l = 0; j < len; j++){
-							if(atributos[i][j] != ','){
-								a->listed_in[k][l++] = atributos[i][j];
-							}else if(atributos[i][j] == ','){
-								a->listed_in[k++][l] = '\0';
-								l = 0;
-								if(atributos[i][j + 1] == ' '){
-									j++;
-								}
-							}
-						}
-
-						size_t s_len = a->listedLen;
-						for(int j = 0; j < s_len - 1; j++){
-							int menor = j;
-							for(int k = j + 1; k < s_len; k++){
-								if(strcmp(a->listed_in[k],a->listed_in[menor]) < 0){
-									menor = k;
-								}
-							}
-							char *aux = a->listed_in[j];
-							a->listed_in[j] = a->listed_in[menor];
-							a->listed_in[menor] = aux;
-						}
-
-					}else{
-						a->listedLen = 0;
-						a->listed_in = NULL;
-					}
-					break;
-				}
-		}
-	}
-
 	for(int i = 0; i < 11; i++){
 		free(atributos[i]);
 	}

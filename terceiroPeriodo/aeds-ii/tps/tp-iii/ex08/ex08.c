@@ -576,7 +576,16 @@ SHOW removerInicio(LISTA *lista){
 
 SHOW removerFim(LISTA *lista){
 	SHOW resp;
-	
+	if(lista->primeiro == lista->ultimo){
+		errx(1,"Erro! lista vazia\n");
+	}else{
+		CELULA *tmp = lista->ultimo;
+		lista->ultimo = tmp->ant;
+		tmp->ant->prox = tmp->ant = tmp->prox = NULL;
+		resp = clone(*(tmp->elemento));
+		free(tmp);
+	}
+	return resp;
 }
 
 

@@ -639,23 +639,13 @@ void mostrarRestante(LISTA *lista){
 	}
 }
 
+void leArquivo(SHOW*);
+
 int main(){
 	SHOW *shows = (SHOW *)calloc(1368,sizeof(SHOW));
 
-	FILE *file = fopen("/tmp/disneyplus.csv", "r");
-
-	char *line = (char *)malloc(1024*sizeof(char));
-	while(fgetc(file) != '\n');
-
-	for(int i = 0; i < 1368; i++){
-		readLine(line, 1024,  file);
-
-		ler((shows + i),line);
-
-	}
-	free(line);
-	fclose(file);
-
+	leArquivo(shows);
+	
 	LISTA *lista_shows = new_lista();
 
 	char *entry = (char *)malloc(255 * sizeof(char));
@@ -736,4 +726,22 @@ int main(){
 	free(shows);
 
 	return 0;
+}
+
+void leArquivo(SHOW *shows){
+	FILE *file = fopen("/tmp/disneyplus.csv", "r");
+
+	char *line = (char *)malloc(1024*sizeof(char));
+
+	while(fgetc(file) != '\n');
+
+	for(int i = 0; i < 1368; i++){
+		readLine(line, 1024,  file);
+
+		ler((shows + i),line);
+
+	}
+
+	free(line);
+	fclose(file);
 }

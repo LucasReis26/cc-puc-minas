@@ -502,44 +502,63 @@ CELULA* new_celula_e(SHOW show){
 
 typedef struct{
 	CELULA *primeiro;
+	CELULA *ultimo;
 }FILA;
 
 FILA* new_fila(){
 	FILA *tmp = (FILA *)malloc(sizeof(FILA));
 	tmp->primeiro = new_celula();
+	tmp->ultimo = tmp->primeiro;
 	return tmp;
 }
 
 int tamanho(FILA *fila){
 	int tam = 0;
 	CELULA *i;
-	for(i = fila->primeiro->prox; i != NULL; i = i->prox, tam++);
+	for(i = fila->primeiro; i != fila->ultimo; i = i->prox, tam++);
 	return tam;
 }
 
+SHOW remover(FILA*);
+
 void inserir(FILA *fila, SHOW show){
-	CELULA *tmp = new_celula_e(show);
-	CELULA *i;
-	for(i = fila->primeiro; i->prox != NULL; i = i->prox);
-	i->prox = tmp;
-	tmp = i = NULL;
+	int tam = tamanho(fila);
+	if(tam == 5){
+		remover(fila);
+		CELULA *tmp = new_celula_e(show);
+		fila->ultimo->prox = tmp;
+		fila->ultimo = tmp;
+		fila->ultimo->prox = fila->primeiro->prox;
+		tmp = NULL;
+	}else{
+		CELULA *tmp = new_celula_e(show);
+		fila->ultimo->prox = tmp;
+		fila->ultimo = tmp;
+		fila->ultimo->prox = fila->primeiro->prox;
+		tmp = NULL;
+	}
 }
 
 
 SHOW remover(FILA *fila){
 	SHOW resp;
 
-	if(fila->primeiro->prox == NULL){
+	if(fila->primeiro == fila->ultimo){
 		errx(1,"Erro ao remover\n");
 	}else{
 		CELULA *tmp = fila->primeiro->prox;
 		fila->primeiro->prox = fila->primeiro->prox->prox;
+		fila->ultimo->prox = fila->primeiro->prox->prox;
 		tmp->prox = NULL;
 		resp = clone(*(tmp->elemento));
 		free(tmp);
 	}
 
 	return resp;
+}
+
+int mediaFila(FILA *fila){
+
 }
 
 void mostrarRestante(FILA *fila){

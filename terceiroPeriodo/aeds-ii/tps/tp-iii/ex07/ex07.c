@@ -520,6 +520,7 @@ int tamanho(FILA *fila){
 }
 
 SHOW remover(FILA*);
+int mediaFila(FILA*);
 
 void inserir(FILA *fila, SHOW show){
 	int tam = tamanho(fila);
@@ -537,6 +538,7 @@ void inserir(FILA *fila, SHOW show){
 		fila->ultimo->prox = fila->primeiro->prox;
 		tmp = NULL;
 	}
+	printf("[Media] %d\n",mediaFila(fila));
 }
 
 
@@ -558,7 +560,14 @@ SHOW remover(FILA *fila){
 }
 
 int mediaFila(FILA *fila){
+	int resp = 0;
+	int tam = tamanho(fila);
 
+	CELULA *i = fila->primeiro->prox;
+
+	for(int j = tam; j > 0;j--, resp += i->elemento->release_year, i = i->prox );
+
+	return resp / tam;
 }
 
 void mostrarRestante(FILA *fila){

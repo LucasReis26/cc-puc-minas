@@ -526,7 +526,18 @@ void inserir(PILHA *pilha, SHOW show){
 
 
 SHOW remover(PILHA *pilha){
+	SHOW resp;
+	if(pilha->topo->prox == NULL){
+		errx(1,"Erro ao remover\n");
+	}else{
+		CELULA *tmp = pilha->topo->prox;
+		pilha->topo->prox = pilha->topo->prox->prox;
+		tmp->prox = NULL;
+		resp = clone(*(tmp->elemento));
+		free(tmp);
+	}
 
+	return resp;
 }
 
 void mostrarRestante(PILHA *pilha){

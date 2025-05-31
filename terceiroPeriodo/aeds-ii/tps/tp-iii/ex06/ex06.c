@@ -615,7 +615,7 @@ void preenchePilhaInicialmente(PILHA *pilha,SHOW *shows){
 
 	while(strcmp(entry,"FIM") != 0){
 		int id = atoi((entry + 1));
-		inserirFim(pilha,  *(shows + (--id)));
+		inserir(pilha,  shows[--id]);
 		scanf("%s",entry);
 	}
 }

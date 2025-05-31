@@ -640,6 +640,7 @@ void mostrarRestante(LISTA *lista){
 }
 
 void leArquivo(SHOW*);
+void preencheListaInicialmente(LISTA*,SHOW*);
 
 int main(){
 	SHOW *shows = (SHOW *)calloc(1368,sizeof(SHOW));
@@ -648,14 +649,7 @@ int main(){
 	
 	LISTA *lista_shows = new_lista();
 
-	char *entry = (char *)malloc(255 * sizeof(char));
-	scanf("%s",entry);
-
-	while(strcmp(entry,"FIM") != 0){
-		int id = atoi((entry + 1));
-		inserirFim(lista_shows,  *(shows + (--id)));
-		scanf("%s",entry);
-	}
+	preencheListaInicialmente(lista_shows,shows);
 	
 	int ops;
 
@@ -744,4 +738,14 @@ void leArquivo(SHOW *shows){
 
 	free(line);
 	fclose(file);
+}
+void preencheListaInicialmente(LISTA *lista,SHOW *shows){
+	char *entry = (char *)malloc(255 * sizeof(char));
+	scanf("%s",entry);
+
+	while(strcmp(entry,"FIM") != 0){
+		int id = atoi((entry + 1));
+		inserirFim(lista,  *(shows + (--id)));
+		scanf("%s",entry);
+	}
 }

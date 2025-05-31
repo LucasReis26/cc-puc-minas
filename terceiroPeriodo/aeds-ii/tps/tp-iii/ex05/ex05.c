@@ -518,7 +518,8 @@ CELULA* new_celula(){
 
 CELULA* new_celula_e(SHOW show){
 	CELULA *tmp = (CELULA *)malloc(sizeof(CELULA));
-	tmp->elemento = &show;
+	tmp->elemento = (SHOW *)malloc(sizeof(SHOW));
+	*(tmp->elemento) = clone(show);
 	tmp->prox = NULL;
 	return tmp;
 }

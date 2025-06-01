@@ -100,6 +100,7 @@ int monthToInteger(char *w){
 
 	return resp;
 }
+
 char *integerToMonth(int x){
 	char *resp = (char *)malloc(25 * sizeof(char));
 	
@@ -503,6 +504,7 @@ CELULA* new_celula_e(SHOW show){
 	return tmp;
 }
 
+
 typedef struct{
 	CELULA *primeiro;
 	CELULA *ultimo;
@@ -714,16 +716,3 @@ void quicksort(LISTA *lista, CELULA *esq, CELULA *dir){
 	/* TERMINAR IMPLEMENTAÇÃO QUICKSORT */
 }
 
-// void executaOperacao(char *op, LISTA *lista_shows, SHOW *shows){
-// 	if(strcmp(op,"I") == 0){
-//
-// 		int id = getShowId();
-// 		inserir(lista_shows,shows[--id]);
-//
-// 	} else if(strcmp(op,"R") == 0){
-//
-// 		SHOW removedShow = remover(lista_shows);
-// 		printf("(R) %s\n",removedShow.title);
-//
-// 	}
-// }

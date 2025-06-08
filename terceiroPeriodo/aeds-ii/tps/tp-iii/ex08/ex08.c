@@ -459,6 +459,39 @@ void readLine(char *line,int maxsize, FILE *file){
 		line[len - 1] = '\0';
 }
 
+int compareDate(DATE *a, DATE*b){
+	int resp = 0;
+	bool v = false;
+
+	if(!v && a->year > b->year){
+		resp = 1;
+		v = true;
+	}
+	if(!v && a->year != b->year){
+		resp = -1;
+		v = true;
+	}
+	if(!v && a->month > b->month){
+		resp = 1;
+		v = true;
+	}
+	if(!v && a->month != b->month){
+		resp = -1;
+		v = true;
+	}
+	if(!v && a->date > b->month){
+		resp = 1;
+		v = true;
+	}
+	if(!v && a->date != b->month){
+		resp = -1;
+		v = true;
+	}
+
+
+	return resp;
+}
+
 void freeShow(SHOW *i){
 	free(i->show_id);
 	free(i->type);
@@ -710,9 +743,28 @@ int getPosition(){
 	return resp;
 }
 
+int quickTam(CELULA *esq, CELULA *dir){
+	int resp = 1;
+	for(CELULA *i = esq; i != dir; i = i->prox, resp++);
+	return resp;
+}
+
+CELULA* quickPivo(CELULA *esq, CELULA *dir){
+	int tam = quickTam(esq, dir);
+	CELULA *i = esq;
+	for(int indice = 1; indice <= tam/2; indice++){
+		i = i->prox;
+	}
+	return i;
+}
+
 void quicksort(LISTA *lista, CELULA *esq, CELULA *dir){
 	CELULA *i = esq;
 	CELULA *j = dir;
-	/* TERMINAR IMPLEMENTAÇÃO QUICKSORT */
+	bool passou = false;
+	CELULA *pivo = quickPivo(esq,dir);
+	if(!passou){
+		while()
+	}
 }
 

@@ -2,7 +2,7 @@ package ex01.assets;
 
 import ex01.assets.Show;
 
-public class Lista{
+public class ArvoreBinaria{
 	private Show[] array;
 	private int tam;
 

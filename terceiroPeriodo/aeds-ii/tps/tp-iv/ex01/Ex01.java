@@ -3,10 +3,10 @@ package ex01;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import ex01.assets.Lista;
+
+import ex01.assets.ArvoreBinaria;
 import ex01.assets.Show;
 
 public class Ex01{
@@ -24,45 +24,23 @@ public class Ex01{
 			shows[i].ler(line);
 		}
 
-		Lista lista_shows = new Lista();
+		ArvoreBinaria ab_shows = new ArvoreBinaria();
 
 		String getId = sc.nextLine();
 		while(!getId.equals("FIM")){
 			Integer id = Integer.parseInt(getId.substring(1,getId.length()));
-			lista_shows.inserirFim(shows[id - 1].clone());
+			ab_shows.inserir(shows[id - 1].clone());
 			getId = sc.nextLine();
 		}
 
-		int operacoes = sc.nextInt();
+		String nome_busca = sc.nextLine();
 
-		for(int i = 0; i < operacoes; i++){
-			String getOp = sc.next();
+		while(!nome_busca.equals("FIM")){
+			if(ab_shows.pesquisar(nome_busca)) System.out.println("SIM");
+			else System.out.println("NAO");
 
-			if(getOp.equals("II")){
-				getId = sc.next();
-				Integer id = Integer.parseInt(getId.substring(1,getId.length()));
-				lista_shows.inserirInicio(shows[id - 1].clone());
-			}else if(getOp.equals("IF")){
-				getId = sc.next();
-				Integer id = Integer.parseInt(getId.substring(1,getId.length()));
-				lista_shows.inserirFim(shows[id - 1].clone());
-			}else if(getOp.equals("I*")){
-				int pos = sc.nextInt();
-				getId = sc.next();
-				Integer id = Integer.parseInt(getId.substring(1,getId.length()));
-				lista_shows.inserir(shows[id - 1].clone(),pos);
-			}else if(getOp.equals("RI")){
-				System.out.println("(R) " + lista_shows.removerInicio().getTitle());
-			}else if(getOp.equals("RF")){
-				System.out.println("(R) " + lista_shows.removerFim().getTitle());
-			}else if(getOp.equals("R*")){
-				int pos = sc.nextInt();
-				System.out.println("(R) " + lista_shows.remover(pos).getTitle());
-			}
+			nome_busca = sc.nextLine();
 		}
-
-		lista_shows.mostraRestantes();
-
 
 		filesc.close();
 		sc.close();

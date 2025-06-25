@@ -9,7 +9,7 @@ public class No{
 
 	public No(Show elemento){
 		this.elemento = elemento;
-		dir = esq = NULL;
+		dir = esq = null;
 	}
 
 	public Show getElemento() {

@@ -4,6 +4,7 @@
 #include "no.h"
 #include "show.h"
 #include <stdbool.h>
+#include "logStatus.h"
 
 typedef struct AVL{
 	NO* raiz;
@@ -15,8 +16,8 @@ NO* rotacionarDir(NO*);
 NO* rotacionarEsq(NO*);
 NO* balancear(NO*);
 
-bool f_pesquisar(char*,NO*);
-bool pesquisar(char*,AVL*);
+bool f_pesquisar(char*,NO*,LOGSTATUS*);
+bool pesquisar(char*,AVL*,LOGSTATUS*);
 NO* f_inserir(SHOW,NO*);
 void inserir(SHOW,AVL*);
 

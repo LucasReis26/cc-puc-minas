@@ -1,5 +1,5 @@
-all: main tools avl no date show
-	gcc ex03.o tools.o avl.o no.o show.o date.o -o exec;
+all: main tools avl no date show logstatus
+	gcc ex03.o tools.o avl.o no.o show.o date.o logStatus.o -o exec;
 
 clear:
 	rm *.o;
@@ -23,6 +23,9 @@ no:
 avl:
 	gcc -c ./assets/avl.c;
 
+logstatus:
+	gcc -c ./assets/logStatus.c;
+
 debug: gdb
 	gcc ex03.o tools.o avl.o no.o show.o date.o -o exec;
 
@@ -33,4 +36,5 @@ gdb:
 	gcc -g -c ./assets/show.c
 	gcc -g -c ./assets/no.c
 	gcc -g -c ./assets/avl.c
+	gcc -g -c ./assets/logStatus.c
 

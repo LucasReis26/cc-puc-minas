@@ -4,6 +4,7 @@
 #include "assets/show.h"
 #include "assets/tools.h"
 #include "assets/avl.h"
+#include "assets/logStatus.h"
 
 int main(){
 	SHOW *shows = (SHOW *)calloc(1368,sizeof(SHOW));
@@ -33,12 +34,21 @@ int main(){
 
 	readLine(line,255,stdin);
 
+	LOGSTATUS* ls = new_logstatus();
+
+	iniciarContagem(ls);
 	while(strcmp(line,"FIM") != 0){
-		if(pesquisar(line, avl)) printf("SIM\n");
+		if(pesquisar(line, avl,ls)) printf("SIM\n");
 		else printf("NAO\n");
 		readLine(line,255,stdin);
 	}
+	terminarContagem(ls);
 
+	FILE *arquivo_log = fopen("../853431_avl.txt","w");
+
+	fprintf(arquivo_log, "%lf\t%d", getTime(ls),ls->comparacoes);
+
+	fclose(arquivo_log);
 	for(int i = 0; i < 1368; i++)
 		freeShow(shows + i);
 	free(shows);

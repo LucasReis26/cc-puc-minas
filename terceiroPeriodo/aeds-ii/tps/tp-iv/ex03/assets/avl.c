@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "avl.h"
+#include "logStatus.h"
 #include "no.h"
 
 AVL* new_avl(){
@@ -12,24 +13,28 @@ AVL* new_avl(){
 	return resp;
 }
 
-bool pesquisar(char *x,AVL *avl){
+bool pesquisar(char *x,AVL *avl, LOGSTATUS *ls){
 	printf("raiz ");
-	return f_pesquisar(x,avl->raiz);
+	return f_pesquisar(x,avl->raiz,ls);
 }
 
-bool f_pesquisar(char *x, NO *i){
+bool f_pesquisar(char *x, NO *i, LOGSTATUS *ls){
 	bool resp;
 
 	if(i == NULL){
+		comparacao(ls, 1);
 		resp = false;
 	}else if(strcmp(x,i->elemento.title) == 0){
+		comparacao(ls, 2);
 		resp = true;
 	}else if(strcmp(x,i->elemento.title) < 0){
+		comparacao(ls, 3);
 		printf("esq ");
-		resp = f_pesquisar(x,i->esq);
+		resp = f_pesquisar(x,i->esq,ls);
 	}else{
+		comparacao(ls, 4);
 		printf("dir ");
-		resp = f_pesquisar(x,i->dir);
+		resp = f_pesquisar(x,i->dir,ls);
 	}
 
 	return resp;

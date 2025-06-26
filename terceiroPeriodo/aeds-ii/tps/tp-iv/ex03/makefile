@@ -22,3 +22,15 @@ no:
 
 avl:
 	gcc -c ./assets/avl.c;
+
+debug: gdb
+	gcc ex03.o tools.o avl.o no.o show.o date.o -o exec;
+
+gdb:
+	gcc -g -c ./ex03.c
+	gcc -g -c ./assets/tools.c
+	gcc -g -c ./assets/date.c
+	gcc -g -c ./assets/show.c
+	gcc -g -c ./assets/no.c
+	gcc -g -c ./assets/avl.c
+

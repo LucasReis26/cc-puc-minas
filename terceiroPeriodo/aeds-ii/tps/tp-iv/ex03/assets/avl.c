@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "avl.h"
 #include "no.h"
@@ -12,6 +13,7 @@ AVL* new_avl(){
 }
 
 bool pesquisar(char *x,AVL *avl){
+	printf("raiz ");
 	return f_pesquisar(x,avl->raiz);
 }
 
@@ -23,8 +25,10 @@ bool f_pesquisar(char *x, NO *i){
 	}else if(strcmp(x,i->elemento.title) == 0){
 		resp = true;
 	}else if(strcmp(x,i->elemento.title) < 0){
+		printf("esq ");
 		resp = f_pesquisar(x,i->esq);
 	}else{
+		printf("dir ");
 		resp = f_pesquisar(x,i->dir);
 	}
 
@@ -76,7 +80,7 @@ NO* rotacionarDir(NO* no) {
 	noEsq->dir = no;
 	no->esq = noEsqDir;
 	setNivel(no); 
-	setNivel(no->esq);
+	setNivel(noEsq);
 
 	return noEsq;
 }
@@ -88,7 +92,7 @@ NO* rotacionarEsq(NO* no) {
 	no->dir = noDirEsq;
 
 	setNivel(no);
-	setNivel(no->dir);
+	setNivel(noDir);
 
 	return noDir;
 }

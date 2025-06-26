@@ -14,6 +14,10 @@ NO* new_no(SHOW elemento){
 }
 
 void setNivel(NO *no){
+	if(no == NULL){
+		return;
+	}
+
 	no->nivel = 1 + max(getNivel(no->esq),getNivel(no->dir));
 }
 

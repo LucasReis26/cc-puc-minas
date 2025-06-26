@@ -2,12 +2,14 @@ package ex01;
 
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import ex01.assets.ArvoreBinaria;
 import ex01.assets.Show;
+import ex01.assets.LogStatus;
 
 public class Ex01{
 	public static void main(String[] args) throws FileNotFoundException{
@@ -33,14 +35,27 @@ public class Ex01{
 			getId = sc.nextLine();
 		}
 
-		String nome_busca = sc.nextLine();
+		try{
+			File arquivo_log = new File("./853431_arvoreBinaria.txt");
+			FileWriter fw = new FileWriter(arquivo_log);
+			LogStatus ls = new LogStatus();
 
-		while(!nome_busca.equals("FIM")){
-			if(ab_shows.pesquisar(nome_busca)) System.out.println("SIM");
-			else System.out.println("NAO");
+			String nome_busca = sc.nextLine();
+			ls.iniciar();
+			while(!nome_busca.equals("FIM")){
+				if(ab_shows.pesquisar(nome_busca,ls)) System.out.println("SIM");
+				else System.out.println("NAO");
 
-			nome_busca = sc.nextLine();
+				nome_busca = sc.nextLine();
+			}
+			ls.parar();
+
+			fw.write(ls.tempoAlgoritmo() + "\t" + ls.getComparacoes());
+			fw.close();
+		}catch(IOException e){
+			e.printStackTrace();
 		}
+
 
 		filesc.close();
 		sc.close();

@@ -1,4 +1,4 @@
-all: main tools date show
+all: main tools avl no date show
 	gcc ex03.o tools.o avl.o no.o show.o date.o -o exec;
 
 clear:

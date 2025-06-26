@@ -2,7 +2,7 @@
 #define SHOW_H
 
 #include <stddef.h>
-#include "Date.h"
+#include "date.h"
 
 typedef struct{
 	char *show_id;

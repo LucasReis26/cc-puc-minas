@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "Date.h"
-#include "Tools.h"
+#include "date.h"
+#include "tools.h"
 
 int monthToInteger(char *w){
 	int resp = 0;

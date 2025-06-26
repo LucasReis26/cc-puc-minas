@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "Tools.h"
+#include "tools.h"
 
 char *itoa(int num){
 	char *resp = (char *)malloc(12 * sizeof(char));

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "assets/Show.h"
-#include "assets/Tools.h"
+#include "assets/show.h"
+#include "assets/tools.h"
 
 int main(){
 	SHOW *shows = (SHOW *)calloc(1368,sizeof(SHOW));

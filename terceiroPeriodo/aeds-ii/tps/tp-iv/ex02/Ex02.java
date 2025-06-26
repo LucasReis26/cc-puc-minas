@@ -1,4 +1,4 @@
-package ex01;
+package ex02;
 
 import java.util.Scanner;
 import java.io.File;
@@ -6,10 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import ex01.assets.ArvoreArvore;
-import ex01.assets.Show;
+import ex02.assets.ArvorePrimaria;
+import ex02.assets.Show;
 
-public class Ex01{
+public class Ex02{
 	public static void main(String[] args) throws FileNotFoundException{
 		Scanner sc = new Scanner(System.in);
 		File arquivo = new File("/tmp/disneyplus.csv");
@@ -24,20 +24,24 @@ public class Ex01{
 			shows[i].ler(line);
 		}
 
-		ArvoreArvore ab_shows = new ArvoreArvore;
+		int[] insertNums = {7, 3, 11, 1, 5, 9, 13, 0, 2, 4, 6, 8, 10, 12, 14};
 
+		ArvorePrimaria ap = new ArvorePrimaria();
+
+		for(int i = 0; i < insertNums.length; i++) ap.inserir(insertNums[i]);
+			
 		String getId = sc.nextLine();
 		while(!getId.equals("FIM")){
 			Integer id = Integer.parseInt(getId.substring(1,getId.length()));
-			ab_shows.inserir(shows[id - 1].clone());
+			ap.inserir(shows[id - 1].clone());
 			getId = sc.nextLine();
 		}
 
 		String nome_busca = sc.nextLine();
 
 		while(!nome_busca.equals("FIM")){
-			if(ab_shows.pesquisar(nome_busca)) System.out.println("SIM");
-			else System.out.println("NAO");
+			if(ap.mostrar(nome_busca)) System.out.println(" SIM");
+			else System.out.println(" NAO");
 
 			nome_busca = sc.nextLine();
 		}

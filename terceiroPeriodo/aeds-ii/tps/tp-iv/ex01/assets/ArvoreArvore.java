@@ -2,10 +2,10 @@ package ex01.assets;
 
 import ex01.assets.Show;
 
-public class ArvoreBinaria{
+public class ArvoreArvore{
 	private No raiz;
 
-	public ArvoreBinaria(){
+	public ArvoreArvore){
 		raiz = null;
 	}
 

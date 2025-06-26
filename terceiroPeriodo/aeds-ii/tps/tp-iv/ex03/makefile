@@ -1,5 +1,5 @@
 all: main tools date show
-	gcc ex03.o tools.o show.o date.o -o exec;
+	gcc ex03.o tools.o avl.o no.o show.o date.o -o exec;
 
 clear:
 	rm *.o;
@@ -16,3 +16,9 @@ date:
 
 show:
 	gcc -c ./assets/show.c;
+
+no:
+	gcc -c ./assets/no.c;
+
+avl:
+	gcc -c ./assets/avl.c;

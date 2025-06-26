@@ -5,5 +5,6 @@
 
 char* itoa(int);
 void readLine(char*,int,FILE*);
+int max(int,int);
 
 #endif

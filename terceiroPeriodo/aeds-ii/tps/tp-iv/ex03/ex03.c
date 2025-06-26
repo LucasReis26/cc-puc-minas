@@ -13,13 +13,11 @@ int main(){
 
 	for(int i = 0; i < 1368; i++){
 		readLine(line, 1024,  file);
-
 		ler((shows + i),line);
-
 	}
+
 	free(line);
 	fclose(file);
-
 
 	for(int i = 0; i < 1368; i++)
 		freeShow(shows + i);

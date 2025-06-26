@@ -2,6 +2,7 @@ package ex02.assets;
 
 import ex02.assets.Show;
 import ex02.assets.ArvoreSecundaria;
+import ex02.assets.LogStatus;
 
 public class ArvorePrimaria{
 	private No raiz;
@@ -10,31 +11,33 @@ public class ArvorePrimaria{
 		raiz = null;
 	}
 
-	private boolean mostrar(String x, No i){
+	private boolean mostrar(String x, No i,LogStatus ls){
 		boolean resp;
 
 		if(i == null){
 			resp = false;
-		}else if(i.getA2().mostrar(x)){
+			ls.comparacao(1);
+		}else if(i.getA2().mostrar(x,ls)){
 			resp = true;
+			ls.comparacao(2);
 		}else{
 			System.out.print(" ESQ ");
-			resp = mostrar(x,i.getEsq());
+			resp = mostrar(x,i.getEsq(),ls);
 			
 			if(!resp){
 				System.out.print(" DIR ");
-				resp = mostrar(x,i.getDir());
+				resp = mostrar(x,i.getDir(),ls);
 			}
 		}
 
 		return resp;
 	}
 
-	public boolean mostrar(String x){
+	public boolean mostrar(String x,LogStatus ls){
 		boolean resp;
 
 		System.out.print("raiz ");
-		resp = mostrar(x,raiz);
+		resp = mostrar(x,raiz,ls);
 
 		return resp;
 	}

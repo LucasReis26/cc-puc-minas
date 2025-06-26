@@ -1,6 +1,7 @@
 package ex02.assets;
 
 import ex02.assets.Show;
+import ex02.assets.LogStatus;
 
 public class ArvoreSecundaria{
 	private No raiz;
@@ -9,26 +10,29 @@ public class ArvoreSecundaria{
 		raiz = null;
 	}
 
-	private boolean mostrar(String x, No i){
+	private boolean mostrar(String x, No i,LogStatus ls){
 		boolean resp;
 
 		if(i == null){
+			ls.comparacao(1);
 			resp = false;
 		}else if(x.equals(i.getElemento().getTitle())){
+			ls.comparacao(2);
 			resp = true;
 		}else if(x.compareTo(i.getElemento().getTitle()) < 0){
+			ls.comparacao(3);
 			System.out.print("esq ");
-			resp = mostrar(x, i.getEsq());
+			resp = mostrar(x, i.getEsq(),ls);
 		}else{
 			System.out.print("dir ");
-			resp = mostrar(x,i.getDir());
+			resp = mostrar(x,i.getDir(),ls);
 		}
 
 		return resp;
 	}
 
-	public boolean mostrar(String x){
-		return mostrar(x,raiz);
+	public boolean mostrar(String x,LogStatus ls){
+		return mostrar(x,raiz,ls);
 	}
 
 	private No inserir(Show x, No i){

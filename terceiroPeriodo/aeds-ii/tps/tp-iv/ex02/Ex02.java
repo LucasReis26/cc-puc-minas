@@ -2,11 +2,13 @@ package ex02;
 
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import ex02.assets.ArvorePrimaria;
+import ex02.assets.LogStatus;
 import ex02.assets.Show;
 
 public class Ex02{
@@ -38,12 +40,25 @@ public class Ex02{
 		}
 
 		String nome_busca = sc.nextLine();
+		try{
+			File arquivo_log = new File("./853431_arvoreArvore.txt");
+			FileWriter fw = new FileWriter(arquivo_log);
+			LogStatus ls = new LogStatus();
 
-		while(!nome_busca.equals("FIM")){
-			if(ap.mostrar(nome_busca)) System.out.println(" SIM");
-			else System.out.println(" NAO");
+			ls.iniciar();
+			while(!nome_busca.equals("FIM")){
+				if(ap.mostrar(nome_busca,ls)) System.out.println(" SIM");
+				else System.out.println(" NAO");
 
-			nome_busca = sc.nextLine();
+				nome_busca = sc.nextLine();
+			}
+			ls.parar();
+
+			fw.write(ls.tempoAlgoritmo() + "\t" + ls.getComparacoes());
+
+			fw.close();
+		}catch(IOException e){
+			e.printStackTrace();
 		}
 
 		filesc.close();

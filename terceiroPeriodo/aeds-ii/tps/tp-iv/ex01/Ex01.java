@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import ex01.assets.ArvoreArvore;
+import ex01.assets.ArvoreBinaria;
 import ex01.assets.Show;
 
 public class Ex01{
@@ -24,7 +24,7 @@ public class Ex01{
 			shows[i].ler(line);
 		}
 
-		ArvoreArvore ab_shows = new ArvoreArvore;
+		ArvoreBinaria ab_shows = new ArvoreBinaria();
 
 		String getId = sc.nextLine();
 		while(!getId.equals("FIM")){

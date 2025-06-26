@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "show.h"
+#include "tools.h"
 
 SHOW clone(SHOW show){
 	SHOW clone;
@@ -59,17 +60,7 @@ SHOW clone(SHOW show){
 	return clone;
 }
 
-char* arrayToString(char **array,size_t len){
-	char *resp = (char *)calloc(255,sizeof(char));
 
-	for(int i = 0; i < len; i++){
-		strcat(resp,array[i]);
-		if(i != len -1)
-			strcat(resp,", ");
-	}
-
-	return resp;
-}
 
 void imprimir(SHOW *a){
 	char *s_date_added;

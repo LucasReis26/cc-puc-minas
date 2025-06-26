@@ -29,3 +29,15 @@ void readLine(char *line,int maxsize, FILE *file){
 int max(int a, int b){
 	return (a > b) ? a : b;
 }
+
+char* arrayToString(char **array,size_t len){
+	char *resp = (char *)calloc(255,sizeof(char));
+
+	for(int i = 0; i < len; i++){
+		strcat(resp,array[i]);
+		if(i != len -1)
+			strcat(resp,", ");
+	}
+
+	return resp;
+}

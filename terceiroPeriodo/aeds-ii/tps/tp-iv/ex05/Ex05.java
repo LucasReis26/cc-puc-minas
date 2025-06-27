@@ -1,4 +1,4 @@
-package ex04;
+package ex05;
 
 import java.util.Scanner;
 import java.io.File;
@@ -7,12 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import ex04.assets.ArvoreAlvinegra;
-import ex04.assets.Show;
-import ex04.assets.LogStatus;
-import ex04.assets.NoAN;
+import ex05.assets.Hash;
+import ex05.assets.Show;
+import ex05.assets.LogStatus;
 
-public class Ex04{
+public class Ex05{
 	public static void main(String[] args) throws FileNotFoundException{
 		Scanner sc = new Scanner(System.in);
 		File arquivo = new File("/tmp/disneyplus.csv");
@@ -27,25 +26,25 @@ public class Ex04{
 			shows[i].ler(line);
 		}
 
-		ArvoreAlvinegra aa_shows = new ArvoreAlvinegra();
+		Hash hash_shows = new Hash();
 
 		String getId = sc.nextLine();
 		while(!getId.equals("FIM")){
 			Integer id = Integer.parseInt(getId.substring(1,getId.length()));
-			aa_shows.inserir(shows[id - 1].clone());
+			hash_shows.inserir(shows[id - 1].clone());
 			getId = sc.nextLine();
 		}
 
 		try{
-			File arquivo_log = new File("./853431_arvoreAlvinegra.txt");
+			File arquivo_log = new File("./853431_hashReserva.txt");
 			FileWriter fw = new FileWriter(arquivo_log);
 			LogStatus ls = new LogStatus();
 
 			String nome_busca = sc.nextLine();
 			ls.iniciar();
 			while(!nome_busca.equals("FIM")){
-				if(aa_shows.pesquisar(nome_busca,ls)) System.out.println("SIM");
-				else System.out.println("NAO");
+				if(hash_shows.pesquisar(nome_busca,ls)) System.out.println(" SIM");
+				else System.out.println(" NAO");
 
 				nome_busca = sc.nextLine();
 			}

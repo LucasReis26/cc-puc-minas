@@ -1,4 +1,4 @@
-package ex04.assets;
+package ex05.assets;
 
 public class LogStatus{
 	private Long inicio;

@@ -20,9 +20,10 @@ public class Algebra{
 				binaryValues[i] = sc.nextInt();
 
 			}
-			sc.nextLine();
+			// sc.nextLine();
 
 			String bExpression = sc.nextLine();
+			// System.out.println(bExpression);
 
 			Integer countExpression = 0;
 
@@ -147,15 +148,17 @@ public class Algebra{
 						}
 					}
 				}
-					// bExpression = new String(cbExp);
+					bExpression = new String(cbExp);
 					// System.out.println(bExpression);
-					response = cbExp[0];
+					response = bExpression.charAt(1);
+
+					// System.out.println(response);
 			}
 
+			System.out.println(response);
 			bExpression = new String(cbExp);
 
 			// System.out.println("há " + countExpression + " partes nessa expressão");
-			System.out.println(response);
 			entryNum = sc.nextInt();
 		}
 
